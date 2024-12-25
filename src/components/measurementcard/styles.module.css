@@ -1,0 +1,100 @@
+.parentdiv {
+    background-color: rgba(9, 8, 8, 0.717);
+    /* Semi-transparent background */
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    backdrop-filter: blur(10px);
+    /* Apply the blur effect */
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari support */
+}
+
+.headerdiv {
+    /* background-color: brown; */
+    height: 8%;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.datadiv {
+    /* background-color: chocolate; */
+    height: 92%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.childdiv {
+    background: linear-gradient(to bottom, #fb8500 , #ffb703 );
+    /* background-color: #E63946; */
+    height: 90%;
+    width: 30%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+.childdiv::-webkit-scrollbar {
+    display: none;
+}
+.TopDiv{
+    /* background-color: blue; */
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ImageDiv{
+    padding: 10px;
+    background-color:white;
+    border-radius: 50px;
+    border: 1px solid rgb(247, 242, 242);
+    margin-top: 10px;
+    height: 90px;
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.InfoDiv{
+    /* background-color: chartreuse; */
+    height: 20%;
+}
+.DetailParentDiv {
+    /* background-color: aqua; */
+    width: 100%;  /* Set the maximum height of the parent div */
+    display: flex;
+    flex-direction: row;
+    /* overflow-y: auto; */
+      /* Enables scrolling if content exceeds the parent's height */
+}
+
+
+.DetailDiv {
+    /* background-color: blueviolet; */
+    display: flex;
+    flex-direction: column;
+    width: 50%;  /* Each .DetailDiv takes 50% of the parent width */
+}
+.DetailDiv p{
+    margin: 10px;
+}
+.DescriptionParentDiv{
+    /* background-color: brown; */
+    display: flex;
+    flex-direction: row;
+    /* padding-bottom: 30px; */
+    padding-bottom: 10px;
+    margin: 10px;
+}
+.DescriptionDiv{
+    /* background-color: blue; */
+    width: 50%;
+}

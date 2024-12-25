@@ -1,0 +1,33 @@
+.parrentDiv {
+    background-color: #023047;
+    height: 35%;
+    border: none;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    /* position: absolute; */
+}
+.buttonDiv{
+    background-color: #023047;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.itemDiv {
+    background-color: transparent;
+    width: 16vw;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    outline: none;
+    border: none;
+
+}
+.buttonDiv :hover{
+    background-color: #fb8500;
+    /* width: 14vw; */
+    
+    border-radius: 10px;
+}
+.itemDiv text{
+    margin-left: 5px;
+}

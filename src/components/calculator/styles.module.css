@@ -1,0 +1,81 @@
+.parentDiv {
+    background-color: #023047;
+    height: 60%;
+    width: 25%;
+    position: absolute;
+    bottom: 10%;
+    right: 35%;
+    border-radius: 10px;    
+    z-index: 999;
+}
+.parentMinimizeDiv {
+    /* background-color: #023047; */
+    height: 10%;
+    width: 3%;
+    position: absolute;
+    bottom: 9%;
+    right: 95%;
+    border-radius: 10px;    
+    z-index: 999;
+}
+
+
+.headerDiv {
+    height: 6%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.crossIcon {
+    margin-left: 10px;
+    display: flex;
+    justify-self: center;
+}
+
+.inputDiv {
+    /* background-color: blue; */
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputDiv textarea {
+    background-color: #023047;
+    color: #fb8500;
+    font-size: 16px;
+    font-weight: 700;
+    width: 95%;
+    height: 98%;
+    text-align: right;
+    resize: none;
+    border-radius: 10px;
+    padding: 10px;
+    border: 2px solid #fb8500;
+}   
+
+.buttonDiv {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 10px;
+    padding: 10px;
+    /* background-color: #c91717; */
+}
+
+.buttonDiv button {
+    /* background-color: #0c1dd7; */
+    border: none;
+    width: 100%; /* Makes the button take full width of the grid cell */
+    height: 50px; /* Default height */
+    font-size: 20px; /* Adjust font size */
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.buttonDiv button:hover {
+    background: linear-gradient(to right, #fb8500, #ffb703);
+}
+
+/* Specific height for the + button */

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive HTML Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: black;
+        }
+        .note {
+            color: orange;
+            font-weight: bold;
+        }
+        .gallery img {
+            margin: 10px;
+            border: 1px solid #ccc;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .form-section input, .form-section select, .form-section textarea {
+            display: block;
+            margin: 10px 0;
+            padding: 5px;
+            width: 300px;
+        }
+        .form-section button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Comprehensive HTML Page</h1>
+    <p>This example uses many HTML tags.</p>
+    <nav>
+        <a href="#introduction">Introduction</a> |
+        <a href="#services">Services</a> |
+        <a href="#gallery">Gallery</a> |
+        <a href="#contact">Contact</a>
+    </nav>
+    <hr>
+
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <p>This is a simple webpage demonstrating various HTML tags used for front-end development. Explore the sections below!</p>
+        <blockquote>"HTML is the backbone of any webpage." - Web Enthusiast</blockquote>
+        <p class="note">Note: This is a highlighted text example.</p>
+    </section>
+
+    <section id="services">
+        <h2>Our Services</h2>
+        <p>We offer the following services:</p>
+        <ul>
+            <li>Web Development</li>
+            <li>UI/UX Design</li>
+            <li>SEO Optimization</li>
+        </ul>
+        <p>Contact us for custom solutions:</p>
+        <dl>
+            <dt>Development</dt>
+            <dd>Creating websites and applications.</dd>
+            <dt>Design</dt>
+            <dd>Improving the user interface and experience.</dd>
+        </dl>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <h2>Gallery</h2>
+        <img src="https://via.placeholder.com/200" alt="Image 1: Placeholder Image">
+        <img src="https://via.placeholder.com/200" alt="Image 2: Placeholder Image">
+    </section>
+
+    <section id="pricing">
+        <h2>Pricing Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Web Development</td>
+                    <td>$500</td>
+                    <td>Full-stack web development.</td>
+                </tr>
+                <tr>
+                    <td>UI/UX Design</td>
+                    <td>$300</td>
+                    <td>Improving visual and functional design.</td>
+                </tr>
+                <tr>
+                    <td>SEO Optimization</td>
+                    <td>$200</td>
+                    <td>Boosting website rankings on search engines.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="contact" class="form-section">
+        <h2>Contact Us</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="service">Service Interested In:</label>
+            <select id="service" name="service">
+                <option value="web-development">Web Development</option>
+                <option value="ui-design">UI/UX Design</option>
+                <option value="seo">SEO Optimization</option>
+            </select>
+            
+            <label for="message">Message:</label>
+            <textarea id="message" name="message"></textarea>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section id="media">
+        <h2>Media Section</h2>
+        <p>Watch our video:</p>
+        <video controls width="320">
+            <source src="sample.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p>Listen to our audio:</p>
+        <audio controls>
+            <source src="sample.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag.
+        </audio>
+    </section>
+
+    <footer>
+        &copy; 2024 Comprehensive HTML Page. All rights reserved.
+    </footer>
+</body>
+</html>
