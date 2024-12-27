@@ -6,6 +6,13 @@
     border-bottom-left-radius: 10px;
     /* position: absolute; */
 }
+
+@media (max-width:768px){
+    .parrentDiv{
+        position: absolute;
+        right: 50px;
+    }
+}
 .buttonDiv{
     background-color: #023047;
     display: flex;

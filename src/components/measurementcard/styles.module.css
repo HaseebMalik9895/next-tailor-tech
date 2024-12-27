@@ -6,10 +6,15 @@
     position: absolute;
     top: 0;
     right: 0;
+    left: 0;
+    bottom: 0;
     backdrop-filter: blur(10px);
     /* Apply the blur effect */
     -webkit-backdrop-filter: blur(10px);
     /* For Safari support */
+    position: fixed;
+    overflow: hidden;
+    z-index: 1000;
 }
 
 .headerdiv {
@@ -31,7 +36,7 @@
 }
 
 .childdiv {
-    background: linear-gradient(to bottom, #fb8500 , #ffb703 );
+    background: linear-gradient(to bottom, #fb8500, #ffb703);
     /* background-color: #E63946; */
     height: 90%;
     width: 30%;
@@ -41,19 +46,22 @@
     border-radius: 10px;
     overflow-y: auto;
 }
+
 .childdiv::-webkit-scrollbar {
     display: none;
 }
-.TopDiv{
+
+.TopDiv {
     /* background-color: blue; */
     height: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.ImageDiv{
+
+.ImageDiv {
     padding: 10px;
-    background-color:white;
+    background-color: white;
     border-radius: 50px;
     border: 1px solid rgb(247, 242, 242);
     margin-top: 10px;
@@ -63,17 +71,20 @@
     justify-content: center;
     align-items: center;
 }
-.InfoDiv{
+
+.InfoDiv {
     /* background-color: chartreuse; */
     height: 20%;
 }
+
 .DetailParentDiv {
     /* background-color: aqua; */
-    width: 100%;  /* Set the maximum height of the parent div */
+    width: 100%;
+    /* Set the maximum height of the parent div */
     display: flex;
     flex-direction: row;
     /* overflow-y: auto; */
-      /* Enables scrolling if content exceeds the parent's height */
+    /* Enables scrolling if content exceeds the parent's height */
 }
 
 
@@ -81,12 +92,15 @@
     /* background-color: blueviolet; */
     display: flex;
     flex-direction: column;
-    width: 50%;  /* Each .DetailDiv takes 50% of the parent width */
+    width: 50%;
+    /* Each .DetailDiv takes 50% of the parent width */
 }
-.DetailDiv p{
+
+.DetailDiv p {
     margin: 10px;
 }
-.DescriptionParentDiv{
+
+.DescriptionParentDiv {
     /* background-color: brown; */
     display: flex;
     flex-direction: row;
@@ -94,7 +108,47 @@
     padding-bottom: 10px;
     margin: 10px;
 }
-.DescriptionDiv{
+
+.DescriptionDiv {
     /* background-color: blue; */
     width: 50%;
+}
+
+
+@media(max-width:768px) {
+    .parentdiv {
+        /* background-color: red; */
+        height: 100vh;
+        position: fixed;
+        overflow: hidden;
+        z-index: 1000;
+    }
+
+    .childdiv {
+        /* background-color: red; */
+        height: 50vh;
+        width: 80vw;
+    }
+
+    .TopDiv {
+        /* background-color: red; */
+        height: 12vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ImageDiv {
+        height: 10vh;
+    }
+
+    .InfoDiv {
+        /* background-color: red; */
+        height: 13vh;
+    }
+
+    .InfoDiv h1 {
+        font-size: 22px;
+        /* color: black; */
+    }
 }

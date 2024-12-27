@@ -1,7 +1,9 @@
 .perentdiv {
+    flex: 1;
     display: flex;
     flex-direction: row;
     background-color: aliceblue;
+    overflow: hidden;
     /* height: 100vh; */
 }
 
@@ -9,8 +11,8 @@
     /* height: 100vh; */
     /* height: 100%; */
     width: 20vw;
-    background-color: #ba51ba;
-    /* background: linear-gradient(to bottom, #fb8500, #ffb703); */
+
+    background: linear-gradient(to bottom, #fb8500, #ffb703);
 }
 
 .leftheader {
@@ -22,14 +24,12 @@
 }
 
 .leftDashPlusAdminDiv {
-    background-color: blue;
     /* height: 80vh; */
     height: 91.89%;
 }
 
 .dashboard {
-    background-color: cadetblue;
-    height: 85%;
+    height: 78%;
     display: flex;
     align-items: center;
     /* justify-content: center; */
@@ -39,7 +39,7 @@
 
 
 .admindiv {
-    background-color: red;
+    /* background-color: red; */
     height: 12vh;
     display: flex;
     justify-content: center;
@@ -135,8 +135,10 @@
 }
 
 .rightdiv {
-    flex: 1;
-    /* background-color: blue; */
+
+    /* flex: 1;  */
+    background-color: aliceblue;
+    /* height: 90vh; */
 
 
 }
@@ -160,10 +162,6 @@
     flex-direction: row;
     align-items: center;
     border: 1px solid rgb(212, 208, 208);
-    /* width: 100vw; */
-    /* height: 7vh; */
-    /* justify-content: center; */
-    /* background-color: aqua; */
 
 }
 
@@ -196,77 +194,7 @@
     justify-content: space-around;
 }
 
-.todaybutton {
-    /* background: linear-gradient(to right, #db84db, #E6E6FA); */
-    background-color: rgb(205, 206, 207);
-    height: 4vh;
-    border-radius: 5px;
-    display: flex;
-    width: 5vw;
-    align-items: center;
-    justify-content: center;
-}
 
-.todaybutton p {
-    font-size: 14px;
-    font-weight: 500;
-    color: rgb(42, 40, 40);
-}
-
-.filterbutton {
-    /* background: linear-gradient(to right, #db84db, #E6E6FA); */
-    background-color: rgb(205, 206, 207);
-    height: 4vh;
-    border-radius: 5px;
-    width: 5vw;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.filterbutton p {
-    font-size: 14px;
-    font-weight: 500;
-    color: rgb(42, 40, 40);
-}
-
-.listmapbutton {
-    background-color: rgb(211, 213, 214);
-    /* background-color: aqua; */
-    height: 4vh;
-    border: none;
-    border-radius: 5px;
-    width: 7vw;
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.listbutton {
-    width: 3.3vw;
-    height: 3vh;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mapbutton {
-    width: 3.3vw;
-    height: 3vh;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: aqua;
-}
-
-.listmapbutton p {
-    font-size: 14px;
-    font-weight: 400;
-}
 
 
 .recordlist {
@@ -464,35 +392,44 @@
 
 @media (max-width: 768px) {
     .perentdiv {
+        flex: 1;
         flex-direction: column;
-        /* Stack the divs vertically */
-        /* height: 100%; */
+        overflow: hidden;
     }
 
     .leftdiv {
-        background-color: rgb(0, 255, 30);
+        background-color: red;
+        width: 100%;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000
+    }
+
+    .leftDashPlusAdminDiv {
+        background: linear-gradient(to right, #fb8500, #ffb703);
+        /* background-color: black; */
+        height: 5vh;
+        /* width: 90%; */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         width: 100%;
 
     }
 
-    .leftDashPlusAdminDiv {
-        background-color: blue;
-        height: 100%;
-        /* width: 100%; */
-        display: flex;
-        flex-direction: row;
+    .leftheader {
+        background: linear-gradient(to right, #fb8500, #ffb703);
     }
 
-    .leftheader {}
-
-
-
-
     .dashboard {
-
-        background-color: purple;
-        width: 85%;
-        height: 100%;
+        /* background: linear-gradient(to right, #fb8500, #ffb703); */
+        /* background-color: transparent; */
+        /* background-color: red; */
+        width: 80vw;
+        height: 5vh;
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -500,28 +437,100 @@
     }
 
     .button {
-        background-color: orange;
+        /* background-color: red; */
         width: 30%;
-        height:50% ;
+        height: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .activebutton {
 
-        background-color: orange;
-        width: 30%;
-        height:70% ;
+        background-color: #023047;
+        width: 35%;
+        height: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .admindiv {
-        background-color: yellow;
-        width: 15%;
+        /* display: none; */
+        /* background-color: aqua; */
+        /* height: 50px; */
+        /* width: 50%; */
+        /* border-radius: 50px; */
     }
 
-    .admin {}
+    .admin {
+        /* display: block; */
+        background-color: none;
+        width: 10vw;
+        height: 5vh;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        /* border-radius: 50px; */
+        box-shadow: none;
+    }
 
     .admindiv .admintext h3,
     .admindiv .admintext p {
         display: none;
+    }
+
+    .rightdiv {
+        padding-top: 10vh;
+        /* overflow-y: none; */
+        /* height: 100vh; */
+    }
+
+    .rightheader {
+        display: none;
+    }
+
+    .recordlist {
+        height: 100vh;
+        /* overflow-y: hidden; */
+        /* background-color: aqua; */
+    }
+
+    .listdiv {
+        /* background-color: yellow; */
+        align-items: center;
+        /* justify-content: center; */
+        /* width: 100%; */
+    }
+
+    .leftlistdiv {
+        /* background-color: #196139; */
+        width: 85%;
+    }
+
+    .namediv {
+        width: 70%;
+        /* background-color: red; */
+    }
+
+    .statusdiv {
+        width: 30%;
+        /* background-color: pink; */
+    }
+
+    .Rightlistdiv {
+        /* background-color: brown; */
+        width: 15%;
+    }
+
+    .codediv,
+    .receivediv,
+    .deleverdiv {
+        display: none;
+    }
+
+    .NewEntryDiv {
+        width: 100%;
     }
 
 

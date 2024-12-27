@@ -10,10 +10,10 @@
 }
 .parentMinimizeDiv {
     /* background-color: #023047; */
-    height: 10%;
+    height: 9%;
     width: 3%;
     position: absolute;
-    bottom: 9%;
+    bottom: 18%;
     right: 95%;
     border-radius: 10px;    
     z-index: 999;

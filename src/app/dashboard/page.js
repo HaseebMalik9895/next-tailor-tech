@@ -24,7 +24,12 @@ const records = [
     { id: 8, code: "4455", name: "Mariam Noor", status: "Pending", image: "/person1.png", receive: "23/09/2024", delever: "02/10/2024" },
     { id: 9, code: "332", name: "Omer Farooq", status: "Deleverd", image: "/person1.png", receive: "20/09/2024", delever: "30/09/2024" },
     { id: 10, code: "193633", name: "Zainab Iqbal", status: "Pending", image: "/person1.png", receive: "21/09/2024", delever: "01/10/2024" },
-    { id: 11, code: "33556", name: "Shahzad Khan", status: "Deleverd", image: "/person1.png", receive: "20/09/2024", delever: "30/09/2024" }
+    { id: 11, code: "33556", name: "Shahzad Khan", status: "Deleverd", image: "/person1.png", receive: "20/09/2024", delever: "30/09/2024" },
+    { id: 12, code: "33556", name: "Saira Bibi", status: "Pending", image: "/person1.png", receive: "21/09/2024", delever: "01/10/2024" },
+    { id: 13, code: "23534", name: "Muhammad Usman", status: "Deleverd", image: "/person1.png", receive: "22/09/2024", delever: "05/10/2024" },
+    { id: 14, code: "34334", name: "Ayesha Khan", status: "Pending", image: "/person1.png", receive: "20/09/2024", delever: "30/09/2024" },
+    { id: 15, code: "997820", name: "Bilal Ahmed", status: "Deleverd", image: "/person1.png", receive: "19/09/2024", delever: "25/09/2024" },
+    { id: 16, code: "4455", name: "Mariam Noor", status: "Pending", image: "/person1.png", receive: "23/09/2024", delever: "02/10/2024" },
 ];
 
 
@@ -142,7 +147,6 @@ const Main = () => {
             <div className={styles.rightdiv}>
                 <div className={styles.rightheader}>
                     <h2>{dashboardbutton}</h2>
-                    {/* <Time /> */}
                 </div>
                 {dashboardbutton === "Records" && (
                     <div className={styles.rightchilddiv}>
@@ -219,14 +223,14 @@ const Main = () => {
                                     </div>
                                 </div>
                             ))}
-
+                            
+                        </div>
                             {showMeasurementCard && (
                                 <MeasurementCard
                                     record={selectedRecord}
                                     closeMeasurementCard={closeMeasurementCard} // Pass close function to MeasurementCard
                                     />
                                 )}
-                        </div>
 
 
                     </div>
