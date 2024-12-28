@@ -53,7 +53,7 @@ const NewEntry = () => {
     return (
         <div className={styles.ParentDiv}>
             <div className={styles.TopDiv}>
-                <div>
+                <div className={styles.receivedDiv}>
                     <label className={styles.label}>Receiving Date: </label>
                     <input
                         type="date"
@@ -96,7 +96,7 @@ const NewEntry = () => {
                         />
                     </label>
                 </div>
-                <div>
+                <div className={styles.deleveryDiv}>
                     <label className={styles.label}>Delivered Date: </label>
                     <input
                         type="date"

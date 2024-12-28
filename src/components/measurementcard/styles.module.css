@@ -83,21 +83,28 @@
     /* Set the maximum height of the parent div */
     display: flex;
     flex-direction: row;
-    /* overflow-y: auto; */
-    /* Enables scrolling if content exceeds the parent's height */
 }
 
-
-.DetailDiv {
-    /* background-color: blueviolet; */
+.detailsDiv {
+    flex-direction: row;
     display: flex;
-    flex-direction: column;
-    width: 50%;
+    justify-content: space-between;
+    /* width: 100%; */
+}
+
+.DetailLeftDiv {
+    width: 90%;
     /* Each .DetailDiv takes 50% of the parent width */
 }
 
-.DetailDiv p {
+.DetailLeftDiv p {
     margin: 10px;
+    /* padding-right: 85px; */
+}
+
+.DetailRightDiv p {
+    /* margin: 10px; */
+    /* padding-top: 15px; */
 }
 
 .DescriptionParentDiv {
@@ -150,5 +157,9 @@
     .InfoDiv h1 {
         font-size: 22px;
         /* color: black; */
+    }
+
+    .DetailDiv {
+        /* width: 100%; */
     }
 }

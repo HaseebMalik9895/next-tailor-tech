@@ -33,7 +33,6 @@ const MeasurementCard = ({ record, closeMeasurementCard }) => {
                                     height: "auto",
                                     maxWidth: "60px",
                                     maxHeight: "60px",
-
                                 }}
                             />
                         </div>
@@ -46,43 +45,38 @@ const MeasurementCard = ({ record, closeMeasurementCard }) => {
                         <p>Delivery Date: {record.delever}</p>
                     </div>
                     <div className={styles.DetailParentDiv}>
-                        <div className={styles.DetailDiv}>
-                            <p>Length / لمبائی </p>
-                            <p>Chest / چھاتی </p>
-                            <p>Waist / کمر </p>
-                            <p>Shoulder / تیرہ </p>
-                            <p>Arm / بازو </p>
-                            <p>Neck / گلہ </p>
-                            <p>Hem / گھیرا </p>
-                            <p>Trouser Length / شلوار لمبائی </p>
-                            <p>Trouser Cuff / پانچہ</p>
-                            <p>Trouser Hem / شلوار گھیرا </p>
-                            <p>Side Pocket / سائیڈ پاکٹ </p>
-                            <p>Front Pocket / فرنٹ پاکٹ </p>
-                            <p>Trouser Pocket / شلوار پاکٹ </p>
-                            <p>Cuff length / کف لمبائی </p>
-                            <p>Hem / گھیرا</p>
-                            <p>Collar / کالر </p>
-                            <p>Stitching / سلائی </p>
-                        </div>
-                        <div className={styles.DetailDiv}>
-                            <p>34.5</p>
-                            <p>12</p>
-                            <p>25.5</p>
-                            <p>15</p>
-                            <p>55</p>
-                            <p>3726</p>
-                            <p>4238</p>
-                            <p>26</p>
-                            <p>256</p>
-                            <p>85</p>
-                            <p>65</p>
-                            <p>26.5</p>
-                            <p>10.</p>
-                            <p>26</p>
-                            <p>Square /چورس</p>
-                            <p>Bain /بین</p>
-                            <p>Square /چورس</p>
+                        <div className={styles.DetailLeftDiv}>
+                            <div className={styles.detailsDiv}><p>Length / لمبائی </p><p>34.5</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Chest / چھاتی </p><p>12</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Waist / کمر </p><p>25.5</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Shoulder / تیرہ </p><p>15</p></div>
+                            <div className={styles.detailsDiv}><p>Arm / بازو </p><p>3726</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Neck / گلہ </p><p>4238</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Hem / گھیرا </p><p>26</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Trouser Length / شلوار لمبائی </p><p>256</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Trouser Cuff / پانچہ</p><p>85</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Trouser Hem / شلوار گھیرا </p><p>65</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Side Pocket / سائیڈ پاکٹ </p><p>26.5</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Front Pocket / فرنٹ پاکٹ </p><p>10.55</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Trouser Pocket / شلوار پاکٹ </p><p>26</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Cuff length / کف لمبائی </p><p>55</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Hem / گھیرا</p><p>Square /چورس</p>
+                            </div>
+                            <div className={styles.detailsDiv}><p>Collar / کالر </p><p>Bain /بین</p></div>
+                            <div className={styles.detailsDiv}><p>Stitching / سلائی </p><p>Square /چورس</p></div>
                         </div>
                     </div>
                     <div className={styles.DescriptionParentDiv}>
@@ -95,7 +89,7 @@ const MeasurementCard = ({ record, closeMeasurementCard }) => {
 
                 {/* child Div  */}
             </div>
-        </div>
+        </div >
     );
 }
 

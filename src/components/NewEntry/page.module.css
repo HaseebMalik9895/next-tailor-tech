@@ -68,9 +68,11 @@
 .MidDiv {
     padding-top: 20px;
     width: 96%;
+    /* background-color: red; */
 }
 
 .MidFirstDiv {
+    /* background-color: yellow; */
     display: flex;
     justify-content: space-between;
 }
@@ -332,4 +334,88 @@
     width: 40%;
     border: none;
     border-radius: 10px;
+}
+
+@media (max-width:768px) {
+    .TopDiv {
+        /* background-color: red; */
+        align-items: center;
+        justify-content: space-evenly;
+        /* flex-direction:column; */
+
+    }
+
+    .receivedDiv {
+        /* background-color: blue; */
+        width: 30%;
+    }
+
+    .receivedDiv input {
+        /* background-color: pink; */
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .ImageDiv {
+        /* background-color: aqua; */
+        height: 10vh;
+        width: 21vw;
+    }
+
+    .SelectedImage {
+        /* width: 100%;  */
+        /* Make it responsive */
+        max-width: 150px;
+        /* Restrict maximum size */
+        aspect-ratio: 1 / 1;
+        /* Ensure it's a square */
+        border-radius: 50%;
+        /* Make it circular */
+        object-fit: cover;
+        /* Ensures image fills the circle */
+        overflow: hidden;
+        /* Ensure no overflow beyond circular shape */
+    }
+
+    .CameraButton {
+        height: 30px;
+        width: 30px;
+        border: 1px solid #023047;
+        position: absolute;
+        bottom: 10px;
+        left: 70px;
+    }
+
+    .deleveryDiv {
+        /* background-color: yellow; */
+        width: 30%;
+        /* width: 100%; */
+    }
+
+    .deleveryDiv input {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .MidFirstDiv {
+        /* background-color: pink; */
+        display: flex;
+        flex-direction: column;
+        height: 30vh;
+    }
+
+    .NameDiv {
+        width: 100%;
+    }
+
+    .NameDiv {
+        width: 100%;
+    }
+    .PHDiv{
+        width: 100%;
+    }
+    .CodeDiv{
+        width: 100%;
+    }
+
 }
