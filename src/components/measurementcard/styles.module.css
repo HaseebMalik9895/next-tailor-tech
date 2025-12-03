@@ -1,11 +1,14 @@
 .parentdiv {
     background-color: rgba(9, 8, 8, 0.717);
     /* Semi-transparent background */
-    height: 100%;
-    width: 100%;
-    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
     top: 0;
+    left: 0;
     right: 0;
+    bottom: 0;
+    z-index: 100000;
     backdrop-filter: blur(10px);
     /* Apply the blur effect */
     -webkit-backdrop-filter: blur(10px);
@@ -97,4 +100,76 @@
 .DescriptionDiv{
     /* background-color: blue; */
     width: 50%;
+}
+
+@media (max-width: 768px) {
+    .parentdiv {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .headerdiv {
+        height: 50px;
+        padding-right: 15px;
+    }
+
+    .datadiv {
+        height: calc(100vh - 50px);
+        padding: 10px;
+    }
+
+    .childdiv {
+        width: 95%;
+        height: 95%;
+        padding: 15px;
+    }
+
+    .ImageDiv {
+        height: 70px;
+        width: 70px;
+        margin-top: 5px;
+    }
+
+    .InfoDiv {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .InfoDiv h1 {
+        font-size: 20px;
+        margin: 5px 0;
+    }
+
+    .InfoDiv p {
+        font-size: 14px;
+        margin: 3px 0;
+    }
+
+    .DetailParentDiv {
+        flex-direction: column;
+    }
+
+    .DetailDiv {
+        width: 100%;
+    }
+
+    .DetailDiv p {
+        margin: 5px 10px;
+        font-size: 14px;
+    }
+
+    .DescriptionParentDiv {
+        flex-direction: column;
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .DescriptionDiv {
+        width: 100%;
+    }
+
+    .DescriptionDiv p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
 }

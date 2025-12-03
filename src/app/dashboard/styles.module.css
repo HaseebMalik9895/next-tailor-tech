@@ -9,7 +9,7 @@
     /* height: 100vh; */
     /* height: 100%; */
     width: 20vw;
-    background-color: #ba51ba;
+    background-color: #fb8500;
     /* background: linear-gradient(to bottom, #fb8500, #ffb703); */
 }
 
@@ -22,24 +22,25 @@
 }
 
 .leftDashPlusAdminDiv {
-    background-color: blue;
+    background-color: #fb8500;
     /* height: 80vh; */
     height: 91.89%;
 }
 
 .dashboard {
-    background-color: cadetblue;
+    background-color: #fb8500;
     height: 85%;
     display: flex;
     align-items: center;
     /* justify-content: center; */
     flex-direction: column;
-
+    position: relative;
+    overflow: visible;
 }
 
 
 .admindiv {
-    background-color: red;
+    /* background-color: red; */
     height: 12vh;
     display: flex;
     justify-content: center;
@@ -152,7 +153,7 @@
 }
 
 .rightchilddiv {
-    /* background-color: crimson; */
+    width: 100%;
 }
 
 .searchdiv {
@@ -278,6 +279,8 @@
     /* Set a fixed height */
     overflow-y: auto;
     /* Enable vertical scrolling */
+    overflow-x: visible;
+    /* Allow menu to overflow horizontally */
 }
 
 .listdiv {
@@ -291,6 +294,12 @@
         inset 0 -2px 2px rgba(206, 199, 199, 0.2);
     position: relative;
     /* Set position to enable z-index */
+    z-index: 1;
+}
+
+.listdiv.menuOpen {
+    z-index: 10000;
+    /* Higher z-index when menu is open */
 }
 
 .leftlistdiv {
@@ -362,8 +371,27 @@
 .Rightlistdiv {
     display: flex;
     align-items: center;
-    justify-content: left;
-    width: 20%;
+    /* justify-content: center; */
+    width: 24%;
+    /* padding-right: 15px; */
+    position: relative;
+    z-index: 1;
+    gap: 10px;
+    /* background-color: #f44336; */
+}
+
+.menuContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.moreIcon {
+    color: gray;
+    cursor: pointer;
+    display: block;
+    flex-shrink: 0;
 }
 
 
@@ -417,46 +445,66 @@
 }
 
 .menuDiv {
-    background-color: #196139;
-    height: 200px;
-    width: 8%;
+    background-color:white;
+    min-width: 120px;
     position: absolute;
-    top: 20px;
-    left: 72%;
-    border: none;
-    border-radius: 5px;
-    z-index: 9999;
-    /* Higher z-index ensures it appears above .listdiv */
+    top: 35px;
+    right: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10001;
+    padding: 4px 0;
+    display: flex;
+    flex-direction: column;
+    
 }
 
-.MenuTextDivDelete {
-    /* background-color: #fb8500; */
-    padding: 5px;
+.MenuTextDiv {
+    background-color: white;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
     flex-direction: row;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+    gap: 8px;
 }
 
-/* .MenuTextDiv,.MenuTextDivDelete :hover{ */
-/* background-color: yellow; */
-/* padding: 5px; */
-/* display: flex; */
-/* align-items: center; */
-/* flex-direction: row; */
-/* } */
-.MenuTextDiv {
-    background-color: red;
+.MenuTextDiv:hover {
+    background-color: #fb8500;
+    border-radius: 5px;
+}
+
+.MenuTextDivDelete {
+    background-color: white;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    gap: 8px;
+}
+
+.MenuTextDivDelete:hover {
+    background-color: #ffebee;
 }
 
 .MenuTextDiv p {
-    color: black;
-    padding-left: 5px;
+    color: #333;
+    padding-left: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .MenuTextDivDelete p {
-    color: red;
-    padding-left: 5px;
+    color: #f44336;
+    padding-left: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 
@@ -465,64 +513,252 @@
 @media (max-width: 768px) {
     .perentdiv {
         flex-direction: column;
-        /* Stack the divs vertically */
-        /* height: 100%; */
+        height: 100vh;
     }
 
     .leftdiv {
-        background-color: rgb(0, 255, 30);
         width: 100%;
+        height: auto;
+        min-height: auto;
+    }
 
+    .leftheader {
+        height: 60px;
+        padding: 0 15px;
+    }
+
+    .leftheader h2 {
+        font-size: 18px;
     }
 
     .leftDashPlusAdminDiv {
-        background-color: blue;
-        height: 100%;
-        /* width: 100%; */
+        height: auto;
         display: flex;
         flex-direction: row;
+        padding: 10px 0;
     }
 
-    .leftheader {}
-
-
-
-
     .dashboard {
-
-        background-color: purple;
         width: 85%;
-        height: 100%;
+        height: auto;
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
         flex-direction: row;
+        padding: 5px 0;
+        gap: 5px;
+    }
+
+    .dashboard > button,
+    .dashboard > div {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dashboard > div > button {
+        width: 100%;
     }
 
     .button {
-        background-color: orange;
-        width: 30%;
-        height:50% ;
+        width: 100%;
+        height: 45px;
+        margin-top: 0;
+        padding: 5px;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .button h3 {
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .activebutton {
+        width: 100%;
+        height: 45px;
+        margin-top: 0;
+        padding: 5px;
+        justify-content: center;
+        flex: 1;
+    }
 
-        background-color: orange;
-        width: 30%;
-        height:70% ;
+    .activebutton h3 {
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .admindiv {
-        background-color: yellow;
         width: 15%;
+        height: auto;
+        padding: 5px;
     }
 
-    .admin {}
+    .admin {
+        width: 100%;
+        height: 50px;
+        padding: 5px;
+    }
 
     .admindiv .admintext h3,
     .admindiv .admintext p {
         display: none;
     }
 
+    .rightdiv {
+        width: 100%;
+        flex: 1;
+    }
 
+    .rightheader {
+        width: 100%;
+        height: 60px;
+        padding: 0 15px;
+    }
+
+    .rightheader h2 {
+        font-size: 18px;
+    }
+
+    .rightheaderinputdiv {
+        width: 100%;
+    }
+
+    .inputstyle {
+        width: 100%;
+        padding-left: 15px;
+        font-size: 14px;
+    }
+
+    .recordlist {
+        height: calc(100vh - 200px);
+        padding: 5px;
+    }
+
+    .listdiv {
+        height: auto;
+        min-height: 80px;
+        flex-direction: column;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .leftlistdiv {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 5px;
+    }
+
+    .codediv {
+        width: auto;
+        padding-left: 10px;
+    }
+
+    .codediv h7 {
+        font-size: 12px;
+    }
+
+    .namediv {
+        width: auto;
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .namediv h3 {
+        font-size: 14px;
+    }
+
+    .statusdiv {
+        width: auto;
+    }
+
+    .statusdiv span {
+        font-size: 12px;
+    }
+
+    .receivediv {
+        width: auto;
+    }
+
+    .receivediv span {
+        font-size: 12px;
+    }
+
+    .deleverdiv {
+        width: auto;
+    }
+
+    .deleverdiv span {
+        font-size: 12px;
+    }
+
+    .Rightlistdiv {
+        width: 100%;
+        justify-content: flex-end;
+        padding: 5px 10px;
+        margin-top: 5px;
+    }
+
+    .menuDiv {
+        right: 10px;
+        top: 40px;
+        min-width: 100px;
+    }
+
+    .NewEntryDiv {
+        width: 100%;
+        height: calc(100vh - 120px);
+    }
+
+    .plusdiv {
+        height: 80px;
+        width: 80px;
+    }
+
+    .plusdiv h1 {
+        font-size: 50px;
+    }
+
+    .buttondiv h3 {
+        font-size: 16px;
+    }
+
+    /* Additional mobile improvements */
+    .menuContainer {
+        position: relative;
+    }
+
+    .moreIcon {
+        padding: 5px;
+    }
+
+    .MenuTextDiv,
+    .MenuTextDivDelete {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+
+    .MenuTextDiv p,
+    .MenuTextDivDelete p {
+        font-size: 14px;
+    }
+
+    /* Make images smaller on mobile */
+    .leftlistdiv img {
+        max-width: 35px !important;
+        max-height: 35px !important;
+    }
+
+    /* Adjust search bar */
+    .searchdiv {
+        border: none;
+        border-bottom: 1px solid rgb(212, 208, 208);
+    }
 }

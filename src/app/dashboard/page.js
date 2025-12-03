@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./styles.module.css";
 import { FiMoreVertical } from 'react-icons/fi';
 import { FiPrinter } from 'react-icons/fi';
-// import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdEdit, MdDelete } from 'react-icons/md';
+import { FiEye } from 'react-icons/fi';
 import { MeasurementCard } from "../../components/measurementcard/page";
 import { NewEntry } from '../../components/NewEntry/page'
 import {Setting} from '../../components/Setting/page'
@@ -37,8 +38,25 @@ const Main = () => {
     const [showNewEntry, setShowNewEntry] = useState(false);
     const [activeMenu, setActiveMenu] = useState(null);
     const [more , setMore] = useState('')
+    const menuRef = useRef(null);
     // const router = useRouter();
 
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setActiveMenu(null);
+            }
+        };
+
+        if (activeMenu !== null) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [activeMenu]);
     
     // Filter records based on search term
     const filteredRecords = records.filter(
@@ -59,6 +77,24 @@ const Main = () => {
     };
     const handleMenuClick = (id) => {
         setActiveMenu((prevId) => (prevId === id ? null : id));
+    };
+
+    const handleEdit = (record) => {
+        console.log('Edit:', record);
+        setActiveMenu(null); // Close menu after action
+        // Add your edit logic here
+    };
+
+    const handleDelete = (record) => {
+        console.log('Delete:', record);
+        setActiveMenu(null); // Close menu after action
+        // Add your delete logic here
+    };
+
+    const handleView = (record) => {
+        console.log('View:', record);
+        setActiveMenu(null); // Close menu after action
+        handleMeasurementClick(record); // Use existing view functionality
     };
 
     return (
@@ -95,23 +131,25 @@ const Main = () => {
                     >
                         <h3>New entry</h3>
                     </button>
-                    <button
-                        className={more === true ? styles.activebutton : styles.button}
-                        onClick={() => {setMore((prevMore) => !prevMore);;
-                            console.log('dashboardddd', dashboardbutton);
-                            console.log('more', more);
-                          }}
+                    <div style={{ position: 'relative', width: '100%' }}>
+                        <button
+                            className={more === true ? styles.activebutton : styles.button}
+                            onClick={() => {setMore((prevMore) => !prevMore);;
+                                console.log('dashboardddd', dashboardbutton);
+                                console.log('more', more);
+                              }}
+                            
+                        >
+                            <h3>More</h3>
+                            {more===true ?(
+                                <MdKeyboardArrowDown size={24} color="#fb8500" />
+                            ):(<MdKeyboardArrowUp size={24} color="#023047" />)}
+                        </button>
                         
-                    >
-                        <h3>More</h3>
-                        {more===true ?(
-                            <MdKeyboardArrowDown size={24} color="#fb8500" />
-                        ):(<MdKeyboardArrowUp size={24} color="#023047" />)}
-                    </button>
-                    
-                {more===true&&(
-                    <Setting/>
-                )} 
+                        {more===true&&(
+                            <Setting/>
+                        )}
+                    </div> 
                 </div>
                 <div className={styles.admindiv}>
                     <button className={styles.admin}>
@@ -160,7 +198,7 @@ const Main = () => {
 
                         <div className={styles.recordlist}>
                         {filteredRecords.map((record) => (
-                                <div key={record.id} className={styles.listdiv}>
+                                <div key={record.id} className={`${styles.listdiv} ${activeMenu === record.id ? styles.menuOpen : ''}`}>
                                     <div className={styles.leftlistdiv}>
                                         <Image
                                             src={record.image}
@@ -193,40 +231,49 @@ const Main = () => {
                                     </div>
                                     <div className={styles.Rightlistdiv}>
                                         <FiPrinter size={24} color="black" />
-                                        <FiMoreVertical
-                                            size={24}
-                                            style={{ color: 'gray' }}
-                                            onClick={() => handleMenuClick(record.id)} // Pass the record ID to the handler
-                                        />
-                                    {activeMenu === record.id && (
-                                        <div className={styles.menuDiv}>
-                                            <ul>
-                                                <li>
-                                                   <text> edit</text>
-                                                </li>
-                                                <li>
-                                                   <text> edit</text>
-                                                </li>
-                                                <li>
-                                                   <text> edit</text>
-                                                </li>
-                                                <li>
-                                                   <text> edit</text>
-                                                </li>
-                                            </ul>
+                                        <div className={styles.menuContainer} ref={menuRef}>
+                                            <FiMoreVertical
+                                                size={24}
+                                                className={styles.moreIcon}
+                                                onClick={() => handleMenuClick(record.id)} // Pass the record ID to the handler
+                                            />
+                                            {activeMenu === record.id && (
+                                                <div className={styles.menuDiv}>
+                                                    <div 
+                                                        className={styles.MenuTextDiv}
+                                                        onClick={() => handleEdit(record)}
+                                                    >
+                                                        <MdEdit size={20} color="#4CAF50" />
+                                                        <p>Edit</p>
+                                                    </div>
+                                                    <div 
+                                                        className={styles.MenuTextDiv}
+                                                        onClick={() => handleView(record)}
+                                                    >
+                                                        <FiEye size={20} color="#2196F3" />
+                                                        <p>View</p>
+                                                    </div>
+                                                    <div 
+                                                        className={styles.MenuTextDivDelete}
+                                                        onClick={() => handleDelete(record)}
+                                                    >
+                                                        <MdDelete size={20} color="#f44336" />
+                                                        <p>Delete</p>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
                                     </div>
                                 </div>
                             ))}
-
-                            {showMeasurementCard && (
-                                <MeasurementCard
-                                    record={selectedRecord}
-                                    closeMeasurementCard={closeMeasurementCard} // Pass close function to MeasurementCard
-                                    />
-                                )}
                         </div>
+                        
+                        {showMeasurementCard && (
+                            <MeasurementCard
+                                record={selectedRecord}
+                                closeMeasurementCard={closeMeasurementCard} // Pass close function to MeasurementCard
+                            />
+                        )}
 
 
                     </div>

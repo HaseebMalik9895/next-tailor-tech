@@ -79,3 +79,62 @@
 }
 
 /* Specific height for the + button */
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .parentDiv {
+        width: 60%;
+        height: 50%;
+        max-height: 80vh;
+        bottom: 20%;
+        right: 5%;
+        left: 5%;
+        position: fixed;
+    }
+
+    .parentMinimizeDiv {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        position: fixed;
+    }
+
+    .headerDiv {
+        height: 50px;
+        padding: 8px;
+    }
+
+    .headerDiv svg {
+        cursor: pointer;
+    }
+
+    .inputDiv {
+        height: 80px;
+        padding: 10px;
+    }
+
+    .inputDiv textarea {
+        font-size: 24px;
+        padding: 15px;
+        height: 100%;
+    }
+
+    .buttonDiv {
+        gap: 8px;
+        padding: 15px;
+    }
+
+    .buttonDiv button {
+        height: 60px;
+        font-size: 24px;
+        font-weight: 600;
+        min-height: 50px;
+    }
+
+    /* Make buttons more touch-friendly on mobile */
+    .buttonDiv button:active {
+        background: linear-gradient(to right, #fb8500, #ffb703);
+        transform: scale(0.95);
+    }
+}
