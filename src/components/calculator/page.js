@@ -37,7 +37,7 @@ const Calculator = ({setCalculator}) => {
     const handleEvaluate = () => {
         try {
             setInput(eval(input).toString()); // Evaluate the expression
-        } catch (error) {
+        } catch {
             setInput('Error'); // Show error if the expression is invalid
         }
     };
@@ -59,7 +59,7 @@ const Calculator = ({setCalculator}) => {
         return () => {
             window.removeEventListener('keydown', handleKeyPress); // Clean up event listener
         };
-    }, [input]);
+    }, [handleKeyPress]);
 
     return (
         <div className={minimize === true ? styles.parentDiv : styles.parentMinimizeDiv}>
