@@ -396,7 +396,7 @@
 }
 
 .statusdiv {
-  /* background-color: blueviolet; */
+  background-color: blueviolet;
   width: 10%;
   display: flex;
   justify-content: center;

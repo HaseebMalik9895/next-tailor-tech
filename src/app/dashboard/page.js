@@ -9,6 +9,10 @@ import { NewEntry } from "../../components/NewEntry/page";
 import { Setting } from "../../components/Setting/page";
 import { db } from "../../firebase/firebase";
 import { ref, onValue, remove } from "firebase/database";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+
 
 const Main = () => {
   const [dashboardbutton, setDashboardbutton] = useState("Records");
@@ -18,6 +22,8 @@ const Main = () => {
   const [showNewEntry, setShowNewEntry] = useState(false);
   const [more, setMore] = useState(false);
   const [records, setRecords] = useState([]);
+  const router = useRouter();
+
 
   // Modal state for delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -215,7 +221,17 @@ const Main = () => {
                       >
                         <h3>{record.customerName}</h3>
                       </div>
-                      <div className={styles.statusdiv}>
+                      <div
+                        className={styles.statusdiv}
+                        // onClick={
+                        //   () => router.push('/StatusRecord') // navigate to statusRecord page with record id
+                        // }
+                      >
+                       <Link href={`/statusRecord/${record.id}`}>
+    <span style={{ color: status === "Pending" ? "red" : "green" }}>
+      {status}
+    </span>
+  </Link>
                         <span
                           style={{
                             color: status === "Pending" ? "red" : "green",
@@ -224,6 +240,7 @@ const Main = () => {
                           {status}
                         </span>
                       </div>
+
                       <div className={styles.receivediv}>
                         <span>{record.receivingDate}</span>
                       </div>
@@ -237,14 +254,14 @@ const Main = () => {
                         className={styles.actionButton}
                         onClick={() => handleEdit(record)}
                       >
-                        <MdEdit size={18} color="green"/>
+                        <MdEdit size={18} color="green" />
                       </button>
 
                       <button
                         className={styles.actionButtonDelete}
                         onClick={() => handleDeleteClick(record)}
                       >
-                        <MdDelete size={18} color="red"/>
+                        <MdDelete size={18} color="red" />
                       </button>
                     </div>
                   </div>
