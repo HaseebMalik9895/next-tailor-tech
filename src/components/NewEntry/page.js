@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
 import { FaCamera } from 'react-icons/fa';
-import { db } from "../../firebase/firebase"; // adjust path
+import { db } from "../../firebase/firebase";
 import { ref, push, set } from "firebase/database";
 
-const NewEntry = () => {
+const NewEntry = ({ recordToEdit }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [currentDate, setCurrentDate] = useState('');
     const [deliveredDate, setDeliveredDate] = useState('');
@@ -16,13 +16,8 @@ const NewEntry = () => {
     const [phone, setPhone] = useState('');
     const [code, setCode] = useState('');
     const [description, setDescription] = useState('');
-
     const [measurements, setMeasurements] = useState({});
-    const [radios, setRadios] = useState({
-        hem: '',
-        collar: '',
-        stitching: ''
-    });
+    const [radios, setRadios] = useState({ hem: '', collar: '', stitching: '' });
 
     const inputNames = [
         'Length', 'Chest', 'Waist', 'Shoulder', 'Arm',
@@ -34,7 +29,20 @@ const NewEntry = () => {
     useEffect(() => {
         const today = new Date();
         setCurrentDate(today.toISOString().split('T')[0]);
-    }, []);
+
+        if (recordToEdit) {
+            // Prefill form fields for editing
+            setCustomerName(recordToEdit.customerName || '');
+            setPhone(recordToEdit.phone || '');
+            setCode(recordToEdit.code || '');
+            setDescription(recordToEdit.description || '');
+            setMeasurements(recordToEdit.measurements || {});
+            setRadios(recordToEdit.radios || { hem: '', collar: '', stitching: '' });
+            setCurrentDate(recordToEdit.receivingDate || today.toISOString().split('T')[0]);
+            setDeliveredDate(recordToEdit.deliveredDate || '');
+            setSelectedImage(recordToEdit.image || null);
+        }
+    }, [recordToEdit]);
 
     const handleMeasurementChange = (name, value) => {
         setMeasurements(prev => ({ ...prev, [name]: value }));
@@ -51,26 +59,43 @@ const NewEntry = () => {
         }
     };
 
-    const handleSaveClick = () => {
-        setModal(true);
-    };
+    const handleSaveClick = () => setModal(true);
 
     const confirmSave = async () => {
         try {
-            const entryRef = ref(db, 'entries');
-            const newEntryRef = push(entryRef);
-            await set(newEntryRef, {
-                customerName,
-                phone,
-                code,
-                measurements,
-                radios,
-                description,
-                receivingDate: currentDate,
-                deliveredDate: deliveredDate,
-                image: selectedImage || null
-            });
-            alert('Entry saved successfully!');
+            if (recordToEdit) {
+                // Update existing record
+                const recordRef = ref(db, `entries/${recordToEdit.id}`);
+                await set(recordRef, {
+                    customerName,
+                    phone,
+                    code,
+                    measurements,
+                    radios,
+                    description,
+                    receivingDate: currentDate,
+                    deliveredDate,
+                    image: selectedImage || null
+                });
+                // alert('Entry updated successfully!');
+            } else {
+                // Create new entry
+                const entryRef = ref(db, 'entries');
+                const newEntryRef = push(entryRef);
+                await set(newEntryRef, {
+                    customerName,
+                    phone,
+                    code,
+                    measurements,
+                    radios,
+                    description,
+                    receivingDate: currentDate,
+                    deliveredDate,
+                    image: selectedImage || null
+                });
+                // alert('Entry saved successfully!');
+            }
+
             setModal(false);
 
             // Reset form
@@ -89,6 +114,7 @@ const NewEntry = () => {
 
     return (
         <div className={styles.ParentDiv}>
+            {/* Top Section: Dates + Image */}
             <div className={styles.TopDiv}>
                 <div>
                     <label className={styles.label}>Receiving Date: </label>
@@ -115,6 +141,7 @@ const NewEntry = () => {
                 </div>
             </div>
 
+            {/* Middle Section: Customer Info */}
             <div className={styles.MidDiv}>
                 <div className={styles.MidFirstDiv}>
                     <div className={styles.NameDiv}>
@@ -131,6 +158,7 @@ const NewEntry = () => {
                     </div>
                 </div>
 
+                {/* Measurements */}
                 <div className={styles.BottomDiv}>
                     <div className={styles.gridcontainer}>
                         {inputNames.map((name, idx) => (
@@ -141,7 +169,7 @@ const NewEntry = () => {
                         ))}
                     </div>
 
-                    {/* Radio Selection */}
+                    {/* Radio Buttons */}
                     <div className={styles.CheckBoxDiv}>
                         <div className={styles.HimDiv}>
                             <h3>Hem / گھیرا</h3>
@@ -180,30 +208,32 @@ const NewEntry = () => {
                         </div>
                     </div>
 
+                    {/* Description */}
                     <div className={styles.DetailInputDiv}>
                         <h3>Description </h3>
                         <textarea placeholder="Enter details here..." value={description} onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>
 
+                {/* Save Button */}
                 <div className={styles.SaveButtonDiv}>
-                    <button className={styles.SaveButton} onClick={handleSaveClick}>Save</button>
+                    <button className={styles.SaveButton} onClick={handleSaveClick}>{recordToEdit ? "Update" : "Save"}</button>
                 </div>
 
+                {/* Confirmation Modal */}
                 {modal && (
                     <div className={styles.congratulationMaindiv}>
                         <div className={styles.congratulationparentdiv}>
                             <div className={styles.congTextDiv}>
-                                <h3>Are You Sure To Save <br /> The Entry?</h3>
+                                <h3>Are You Sure To {recordToEdit ? "Update" : "Save"} <br /> The Entry?</h3>
                             </div>
                             <div className={styles.congButtonDiv}>
-                                <button className={styles.CongButton} onClick={confirmSave}>Save</button>
+                                <button className={styles.CongButton} onClick={confirmSave}>{recordToEdit ? "Update" : "Save"}</button>
                                 <button className={styles.CongButton} onClick={() => setModal(false)}>Cancel</button>
                             </div>
                         </div>
                     </div>
                 )}
-
             </div>
         </div>
     );
