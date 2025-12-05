@@ -1,102 +1,123 @@
-'use client'
-import React from 'react';
-import styles from './styles.module.css'
-import { FiX } from 'react-icons/fi';
-import Image from 'next/image';
-// import { useRouter } from 'next/navigation';
+"use client";
+import React from "react";
+import styles from "./styles.module.css";
+import { FiX } from "react-icons/fi";
+import Image from "next/image";
 
 const MeasurementCard = ({ record, closeMeasurementCard }) => {
+  if (!record) return <div>No record selected.</div>;
 
-    if (!record) return <div>No record selected.</div>;
+  const {
+    customerName,
+    code,
+    receivingDate,
+    deliveredDate,
+    image,
+    description,
+    measurements = {},
+    radios = {},
+  } = record;
 
-    return (
+  const status = record.status || (deliveredDate ? "Delivered" : "Pending");
 
-        <div className={styles.parentdiv}>
-            <div className={styles.headerdiv}>
-                <div>
-                    <FiX size={30} onClick={closeMeasurementCard} style={{ cursor: 'pointer' }} />
-                </div>
+  // Map of keys to labels (English + Urdu)
+  const measurementLabels = {
+    Length: "Length / لمبائی",
+    Chest: "Chest / چھاتی",
+    Waist: "Waist / کمر",
+    Shoulder: "Shoulder / کندھا",
+    Arm: "Arm / بازو",
+    Neck: "Neck / گلہ",
+    Hem: "Hem / گھیرا",
+    "Trouser Length": "Trouser Length / شلوار لمبائی",
+    "Trouser Cuff": "Trouser Cuff / پانچہ",
+    "Trouser Hem": "Trouser Hem / شلوار گھیرا",
+    "Side Pocket": "Side Pocket / سائیڈ پاکٹ",
+    "Front Pocket": "Front Pocket / فرنٹ پاکٹ",
+    "Trouser Pocket": "Trouser Pocket / شلوار پاکٹ",
+    "Cuff length": "Cuff length / کف لمبائی",
+  };
+
+  const radioLabels = {
+    hem: "Hem / گھیرا",
+    collar: "Collar / کالر",
+    stitching: "Stitching / سلائی",
+  };
+
+  return (
+    <div className={styles.parentdiv}>
+      <div className={styles.headerdiv}>
+        <FiX
+          size={30}
+          onClick={closeMeasurementCard}
+          style={{ cursor: "pointer" }}
+        />
+      </div>
+
+      <div className={styles.datadiv}>
+        <div className={styles.childdiv}>
+          {/* Top image */}
+          <div className={styles.TopDiv}>
+            <div className={styles.ImageDiv}>
+              <Image
+                src={image || "/person1.png"}
+                layout="responsive"
+                width={50}
+                height={50}
+                alt="person"
+                style={{
+                  width: "50%",
+                  height: "auto",
+                  maxWidth: "60px",
+                  maxHeight: "60px",
+                }}
+              />
             </div>
-            <div className={styles.datadiv}>
-                {/* child Div  */}
-                <div className={styles.childdiv}>
-                    <div className={styles.TopDiv}>
-                        <div className={styles.ImageDiv}>
-                            <Image
-                                src={record.image}
-                                layout="responsive"
-                                width={50}
-                                height={50}
-                                alt="person"
-                                style={{
-                                    width: "50%",
-                                    height: "auto",
-                                    maxWidth: "60px",
-                                    maxHeight: "60px",
+          </div>
 
-                                }}
-                            />
-                        </div>
-                    </div>
-                    <div className={styles.InfoDiv}>
-                        <h1>{record.name}</h1>
-                        <p>Code: {record.code}</p>
-                        <p>Status: {record.status}</p>
-                        <p>Receive Date: {record.receive}</p>
-                        <p>Delivery Date: {record.delever}</p>
-                    </div>
-                    <div className={styles.DetailParentDiv}>
-                        <div className={styles.DetailDiv}>
-                            <p>Length / لمبائی </p>
-                            <p>Chest / چھاتی </p>
-                            <p>Waist / کمر </p>
-                            <p>Shoulder / تیرہ </p>
-                            <p>Arm / بازو </p>
-                            <p>Neck / گلہ </p>
-                            <p>Hem / گھیرا </p>
-                            <p>Trouser Length / شلوار لمبائی </p>
-                            <p>Trouser Cuff / پانچہ</p>
-                            <p>Trouser Hem / شلوار گھیرا </p>
-                            <p>Side Pocket / سائیڈ پاکٹ </p>
-                            <p>Front Pocket / فرنٹ پاکٹ </p>
-                            <p>Trouser Pocket / شلوار پاکٹ </p>
-                            <p>Cuff length / کف لمبائی </p>
-                            <p>Hem / گھیرا</p>
-                            <p>Collar / کالر </p>
-                            <p>Stitching / سلائی </p>
-                        </div>
-                        <div className={styles.DetailDiv}>
-                            <p>34.5</p>
-                            <p>12</p>
-                            <p>25.5</p>
-                            <p>15</p>
-                            <p>55</p>
-                            <p>3726</p>
-                            <p>4238</p>
-                            <p>26</p>
-                            <p>256</p>
-                            <p>85</p>
-                            <p>65</p>
-                            <p>26.5</p>
-                            <p>10.</p>
-                            <p>26</p>
-                            <p>Square /چورس</p>
-                            <p>Bain /بین</p>
-                            <p>Square /چورس</p>
-                        </div>
-                    </div>
-                    <div className={styles.DescriptionParentDiv}>
-                        <div className={styles.DescriptionDiv}>
-                            <p>Description</p>
-                        </div>
-                        <div className={styles.DescriptionDiv}><p>A suit is a classic and sophisticated garment, typically consisting of a jacket and trousers made from matching fabric. Tailors craft suits with precision to ensure a perfect fit, enhancing both comfort and style. The jacket is often designed with structured shoulders, a tailored waist, and a variety of lapel styles, while trousers are tailored to complement the jacket’s silhouette. </p></div>
-                    </div>
-                </div>
+          {/* Basic Info */}
+          <div className={styles.InfoDiv}>
+            <h1>{customerName}</h1>
+            <p>Code: {code}</p>
+            <p>Status: {status}</p>
+            <p>Receive Date: {receivingDate}</p>
+            <p>Delivery Date: {deliveredDate}</p>
+          </div>
 
-                {/* child Div  */}
+          {/* Measurements */}
+          <div className={styles.DetailParentDiv}>
+            <div className={styles.DetailDiv}>
+              {Object.keys(measurementLabels).map((key, idx) => (
+                <p key={idx}>{measurementLabels[key]}</p>
+              ))}
+              {Object.keys(radioLabels).map((key, idx) => (
+                <p key={idx}>{radioLabels[key]}</p>
+              ))}
             </div>
+
+            <div className={styles.DetailDiv}>
+              {Object.keys(measurementLabels).map((key, idx) => (
+                <p key={idx}>{measurements[key] || "-"}</p>
+              ))}
+              {Object.keys(radioLabels).map((key, idx) => (
+                <p key={idx}>{radios[key] || "-"}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className={styles.DescriptionParentDiv}>
+            <div className={styles.DescriptionDiv}>
+              <p>Description</p>
+            </div>
+            <div className={styles.DescriptionDiv}>
+              <p>{description || "No description provided."}</p>
+            </div>
+          </div>
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export { MeasurementCard };

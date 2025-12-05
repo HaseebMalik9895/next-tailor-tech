@@ -1,10 +1,19 @@
 .parrentDiv {
     background-color: #023047;
-    height: 35%;
+    height: auto;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
     border: none;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    /* position: absolute; */
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    padding: 10px 0;
 }
 .buttonDiv{
     background-color: #023047;
@@ -30,4 +39,23 @@
 }
 .itemDiv text{
     margin-left: 5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .parrentDiv {
+        width: 120%;
+        max-height: 300px;
+        padding: 5px 0;top: 40px;
+    }
+
+    .itemDiv {
+        width: 100%;
+        padding: 8px;
+        justify-content: flex-start;
+    }
+
+    .itemDiv text {
+        font-size: 12px;
+    }
 }

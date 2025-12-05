@@ -1,528 +1,845 @@
 .perentdiv {
-    display: flex;
-    flex-direction: row;
-    background-color: aliceblue;
-    /* height: 100vh; */
+  display: flex;
+  flex-direction: row;
+  background-color: aliceblue;
+  /* height: 100vh; */
 }
 
 .leftdiv {
-    /* height: 100vh; */
-    /* height: 100%; */
-    width: 20vw;
-    background-color: #ba51ba;
-    /* background: linear-gradient(to bottom, #fb8500, #ffb703); */
+  /* height: 100vh; */
+  /* height: 100%; */
+  width: 20vw;
+  background-color: #fb8500;
+  /* background: linear-gradient(to bottom, #fb8500, #ffb703); */
 }
 
 .leftheader {
-    background-color: #fb8500;
-    height: 8.11%;
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
+  background-color: #fb8500;
+  height: 8.11%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
 }
 
 .leftDashPlusAdminDiv {
-    background-color: blue;
-    /* height: 80vh; */
-    height: 91.89%;
+  background-color: #fb8500;
+  /* height: 80vh; */
+  height: 91.89%;
 }
 
 .dashboard {
-    background-color: cadetblue;
-    height: 85%;
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-    flex-direction: column;
-
+  background-color: #fb8500;
+  height: 85%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  position: relative;
+  overflow: visible;
+}
+.actionButton {
+  margin-left: 8px;
+  padding: 4px 8px;
+  background-color: #ffd700; /* Yellow */
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+.actionButton:hover {
+  background-color: #ffc300; /* Darker yellow on hover */
+}
+
+.actionButtonDelete {
+  margin-left: 4px;
+  padding: 4px 8px;
+  background-color: #ffd700; /* Yellow */
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actionButtonDelete:hover {
+  background-color: #ffc300; /* Darker yellow on hover */
+}
 
 .admindiv {
-    background-color: red;
-    height: 12vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* background-color: red; */
+  height: 12vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .admin {
-    background-color: #023047;
-    height: 8vh;
-    width: 18vw;
-    border: none;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    box-shadow: inset 0 0px 0px #023047,
-        /* subtle inner shadow */
-        0 4px 8px rgba(0, 0, 0, 0.4);
-    /* new outer shadow */
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-    /* Smooth transitions */
-    outline: none;
+  background-color: #023047;
+  height: 8vh;
+  width: 18vw;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  box-shadow: inset 0 0px 0px #023047,
+    /* subtle inner shadow */ 0 4px 8px rgba(0, 0, 0, 0.4);
+  /* new outer shadow */
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  /* Smooth transitions */
+  outline: none;
 }
 
 .admin:focus {
-    border: 0px solid rgb(160, 157, 157);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    outline: none;
-    /* Remove default outline on focus */
+  border: 0px solid rgb(160, 157, 157);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  outline: none;
+  /* Remove default outline on focus */
 }
 
 /* Add the pressed effect on click */
 .admin:active {
-    transform: translateY(2px);
-    /* Moves the button down to simulate press */
-    box-shadow: inset 0 0px 8px rgba(0, 0, 0, 0.6),
-        /* Stronger inner shadow */
-        inset 0 -2px 2px rgba(255, 255, 255, 0.2);
-    /* Light shadow on top */
+  transform: translateY(2px);
+  /* Moves the button down to simulate press */
+  box-shadow: inset 0 0px 8px rgba(0, 0, 0, 0.6),
+    /* Stronger inner shadow */ inset 0 -2px 2px rgba(255, 255, 255, 0.2);
+  /* Light shadow on top */
 }
 
-
 .admintext {
-    /* background-color: blue; */
-    padding-left: 10px;
-    text-align: left;
+  /* background-color: blue; */
+  padding-left: 10px;
+  text-align: left;
 }
 
 .admintext p {
-    color: rgb(228, 226, 226)
+  color: rgb(228, 226, 226);
 }
 
 .button {
-    margin-top: 2px;
-    background-color: transparent;
-    height: 6vh;
-    width: 19vw;
-    border-radius: 10px;
-    border: none;
-    padding-left: 10px;
-    /* border: 1px solid gray; */
-    display: flex;
-    justify-content: left;
-    align-items: center;
+  margin-top: 2px;
+  background-color: transparent;
+  height: 6vh;
+  width: 19vw;
+  border-radius: 10px;
+  border: none;
+  padding-left: 10px;
+  /* border: 1px solid gray; */
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
+.modalContent {
+  background-color: #fb8500;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 300px;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #999;
+}
+
+.confirmButton {
+  padding: 8px 16px;
+  background-color: #023047; /* yellow */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirmButton:hover {
+  background-color: #ffc300;
+}
 
 .activebutton {
-    margin-top: 2px;
-    background-color: #023047;
-    height: 6vh;
-    width: 18vw;
-    border-radius: 10px;
-    border: none;
-    padding-left: 10px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    box-shadow: inset 0 0px 0px #023047,
-        /* subtle inner shadow */
-        /* inset 0 0px 0px red, */
-        /* existing inner shadow */
-        0 4px 8px rgba(0, 0, 0, 0.4);
-    /* new outer shadow */
-    outline: none;
+  margin-top: 2px;
+  background-color: #023047;
+  height: 6vh;
+  width: 18vw;
+  border-radius: 10px;
+  border: none;
+  padding-left: 10px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  box-shadow: inset 0 0px 0px #023047,
+    /* subtle inner shadow */ /* inset 0 0px 0px red, */
+      /* existing inner shadow */ 0 4px 8px rgba(0, 0, 0, 0.4);
+  /* new outer shadow */
+  outline: none;
 }
 
-
-
 .activebutton h3 {
-    font-size: 18px;
-
+  font-size: 18px;
 }
 
 .rightdiv {
-    flex: 1;
-    /* background-color: blue; */
-
-
+  flex: 1;
+  /* background-color: blue; */
 }
 
 .rightheader {
-    background: linear-gradient(to right, #fb8500, #ffb703);
-    width: 100vw;
-    height: 8vh;
-    display: flex;
-    /* justify-content: center; */
-    flex-direction: row;
-    align-items: center;
+  background: linear-gradient(to right, #fb8500, #ffb703);
+  width: 100vw;
+  height: 8vh;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: row;
+  align-items: center;
 }
 
 .rightchilddiv {
-    /* background-color: crimson; */
+  width: 100%;
 }
 
 .searchdiv {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border: 1px solid rgb(212, 208, 208);
-    /* width: 100vw; */
-    /* height: 7vh; */
-    /* justify-content: center; */
-    /* background-color: aqua; */
-
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid rgb(212, 208, 208);
+  /* width: 100vw; */
+  /* height: 7vh; */
+  /* justify-content: center; */
+  /* background-color: aqua; */
 }
 
 .rightheaderinputdiv {
-    width: 55vw;
+  width: 55vw;
 
-    display: flex;
-    /* height: 8vh; */
-    /* align-items: center; */
+  display: flex;
+  /* height: 8vh; */
+  /* align-items: center; */
 }
 
 .inputstyle {
-    width: 100vw;
-    height: 6vh;
-    background-color: transparent;
-    color: black;
-    outline: none;
-    border: none;
-    padding-left: 40px;
-
+  width: 100vw;
+  height: 6vh;
+  background-color: transparent;
+  color: black;
+  outline: none;
+  border: none;
+  padding-left: 40px;
 }
 
 .rightheaderfilterdiv {
-    width: 26vw;
-    height: 6vh;
-    /* background-color: brown; */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
+  width: 26vw;
+  height: 6vh;
+  /* background-color: brown; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .todaybutton {
-    /* background: linear-gradient(to right, #db84db, #E6E6FA); */
-    background-color: rgb(205, 206, 207);
-    height: 4vh;
-    border-radius: 5px;
-    display: flex;
-    width: 5vw;
-    align-items: center;
-    justify-content: center;
+  /* background: linear-gradient(to right, #db84db, #E6E6FA); */
+  background-color: rgb(205, 206, 207);
+  height: 4vh;
+  border-radius: 5px;
+  display: flex;
+  width: 5vw;
+  align-items: center;
+  justify-content: center;
 }
 
 .todaybutton p {
-    font-size: 14px;
-    font-weight: 500;
-    color: rgb(42, 40, 40);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(42, 40, 40);
 }
 
 .filterbutton {
-    /* background: linear-gradient(to right, #db84db, #E6E6FA); */
-    background-color: rgb(205, 206, 207);
-    height: 4vh;
-    border-radius: 5px;
-    width: 5vw;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* background: linear-gradient(to right, #db84db, #E6E6FA); */
+  background-color: rgb(205, 206, 207);
+  height: 4vh;
+  border-radius: 5px;
+  width: 5vw;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .filterbutton p {
-    font-size: 14px;
-    font-weight: 500;
-    color: rgb(42, 40, 40);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(42, 40, 40);
 }
 
 .listmapbutton {
-    background-color: rgb(211, 213, 214);
-    /* background-color: aqua; */
-    height: 4vh;
-    border: none;
-    border-radius: 5px;
-    width: 7vw;
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: rgb(211, 213, 214);
+  /* background-color: aqua; */
+  height: 4vh;
+  border: none;
+  border-radius: 5px;
+  width: 7vw;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .listbutton {
-    width: 3.3vw;
-    height: 3vh;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 3.3vw;
+  height: 3vh;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mapbutton {
-    width: 3.3vw;
-    height: 3vh;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: aqua;
+  width: 3.3vw;
+  height: 3vh;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
 }
 
 .listmapbutton p {
-    font-size: 14px;
-    font-weight: 400;
+  font-size: 14px;
+  font-weight: 400;
 }
 
-
 .recordlist {
-
-    /* background-color: #ba51ba ; */
-    flex: 1;
-    /* Make it flexible */
-    height: 630px;
-    /* Set a fixed height */
-    overflow-y: auto;
-    /* Enable vertical scrolling */
+  /* background-color: #ba51ba ; */
+  flex: 1;
+  /* Make it flexible */
+  height: 630px;
+  /* Set a fixed height */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  overflow-x: visible;
+  /* Allow menu to overflow horizontally */
 }
 
 .listdiv {
-    /* background-color: red; */
-    height: 8vh;
-    display: flex;
-    margin-bottom: 4px;
-    border: none;
-    transform: translateY(2px);
-    box-shadow: inset 0 0px 8px rgba(206, 199, 199, 0.2),
-        inset 0 -2px 2px rgba(206, 199, 199, 0.2);
-    position: relative;
-    /* Set position to enable z-index */
+  /* background-color: red; */
+  height: 8vh;
+  display: flex;
+  margin-bottom: 4px;
+  border: none;
+  transform: translateY(2px);
+  box-shadow: inset 0 0px 8px rgba(206, 199, 199, 0.2),
+    inset 0 -2px 2px rgba(206, 199, 199, 0.2);
+  position: relative;
+  /* Set position to enable z-index */
+  z-index: 1;
+}
+
+.listdiv.menuOpen {
+  z-index: 10000;
+  /* Higher z-index when menu is open */
 }
 
 .leftlistdiv {
-    /* background-color: chocolate; */
-    display: flex;
-    padding-left: 15px;
-    flex-direction: row;
-    align-items: center;
-    width: 78%;
+  /* background-color: chocolate; */
+  display: flex;
+  padding-left: 15px;
+  flex-direction: row;
+  align-items: center;
+  width: 73%;
 }
 
 .codediv {
-    /* background-color: tomato; */
-    width: 8%;
-    display: flex;
-    align-items: center;
-    padding-left: 40px;
+  /* background-color: tomato; */
+  width: 8%;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
 }
 
 .codediv h7 {
-    color: gray;
-    font-size: 14px;
+  color: gray;
+  font-size: 14px;
 }
 
 .namediv {
-    /* background-color: red; */
-    width: 20%;
+  /* background-color: red; */
+  width: 20%;
 }
 
 .namediv h3 {
-    color: black;
-    font-size: 16px;
+  color: black;
+  font-size: 16px;
 }
 
 .statusdiv {
-    /* background-color: blueviolet; */
-    width: 10%;
-    display: flex;
-    justify-content: center;
+  background-color: blueviolet;
+  width: 10%;
+  display: flex;
+  justify-content: center;
 }
 
 .receivediv {
-    /* background-color: chocolate; */
-    width: 10%;
-    display: flex;
-    justify-content: center;
+  /* background-color: chocolate; */
+  width: 10%;
+  display: flex;
+  justify-content: center;
 }
 
 .receivediv span {
-    font-size: 16px;
-    /* font-weight: 500; */
-    color: black;
-    ;
+  font-size: 16px;
+  /* font-weight: 500; */
+  color: black;
 }
 
 .deleverdiv {
-    /* background-color: darkgreen; */
-    width: 10%;
-    display: flex;
-    justify-content: center;
+  /* background-color: darkgreen; */
+  width: 10%;
+  display: flex;
+  justify-content: center;
 }
 
 .deleverdiv span {
-    font-size: 16px;
-    /* font-weight: 500; */
-    color: black;
+  font-size: 16px;
+  /* font-weight: 500; */
+  color: black;
 }
 
 .Rightlistdiv {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    width: 20%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  width: 24%;
+  /* padding-right: 15px; */
+  position: relative;
+  z-index: 1;
+  gap: 10px;
+  /* background-color: #f44336; */
 }
 
+.menuContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moreIcon {
+  color: gray;
+  cursor: pointer;
+  display: block;
+  flex-shrink: 0;
+}
 
 /* new entry screen */
 
 .NewEntryDiv {
-    /* background-color: blue; */
-    height: 92vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 82vw;
-
+  /* background-color: blue; */
+  height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 82vw;
 }
 
 .buttondiv {
-    /* background-color: blue; */
-    display: flex;
-    flex-direction: column;
-    /* height: 40%; */
-    /* width: 30%; */
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: column;
+  /* height: 40%; */
+  /* width: 30%; */
 }
 
 .plusdiv {
-    background: #023047;
-    height: 150%;
-    width: 100%;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background: #023047;
+  height: 150%;
+  width: 100%;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .plusdiv h1 {
-    font-size: 80px;
+  font-size: 80px;
 }
 
 .buttondiv h3 {
-    color: #023047;
-    margin-top: 20px;
+  color: #023047;
+  margin-top: 20px;
 }
 
 .SettingComponentDiv {
-    /* background-color: #196139; */
-    height: 92%;
-    width: 100%;
+  /* background-color: #196139; */
+  height: 92%;
+  width: 100%;
 }
 
 .menuDiv {
-    background-color: #196139;
-    height: 200px;
-    width: 8%;
-    position: absolute;
-    top: 20px;
-    left: 72%;
-    border: none;
-    border-radius: 5px;
-    z-index: 9999;
-    /* Higher z-index ensures it appears above .listdiv */
+  background-color: white;
+  min-width: 120px;
+  position: absolute;
+  top: 35px;
+  right: 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10001;
+  padding: 4px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.MenuTextDiv {
+  background-color: white;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  gap: 8px;
+}
+
+.MenuTextDiv:hover {
+  background-color: #fb8500;
+  border-radius: 5px;
 }
 
 .MenuTextDivDelete {
-    /* background-color: #fb8500; */
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    cursor: pointer;
+  background-color: white;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  gap: 8px;
 }
 
-/* .MenuTextDiv,.MenuTextDivDelete :hover{ */
-/* background-color: yellow; */
-/* padding: 5px; */
-/* display: flex; */
-/* align-items: center; */
-/* flex-direction: row; */
-/* } */
-.MenuTextDiv {
-    background-color: red;
+.MenuTextDivDelete:hover {
+  background-color: #ffebee;
 }
 
 .MenuTextDiv p {
-    color: black;
-    padding-left: 5px;
+  color: #333;
+  padding-left: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .MenuTextDivDelete p {
-    color: red;
-    padding-left: 5px;
+  color: #f44336;
+  padding-left: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-
-
-
 @media (max-width: 768px) {
-    .perentdiv {
-        flex-direction: column;
-        /* Stack the divs vertically */
-        /* height: 100%; */
-    }
+  .perentdiv {
+    flex-direction: column;
+    height: 100vh;
+  }
 
-    .leftdiv {
-        background-color: rgb(0, 255, 30);
-        width: 100%;
+  .leftdiv {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+  }
 
-    }
+  .leftheader {
+    height: 60px;
+    padding: 0 15px;
+  }
 
-    .leftDashPlusAdminDiv {
-        background-color: blue;
-        height: 100%;
-        /* width: 100%; */
-        display: flex;
-        flex-direction: row;
-    }
+  .leftheader h2 {
+    font-size: 18px;
+  }
 
-    .leftheader {}
+  .leftDashPlusAdminDiv {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0;
+  }
 
+  .dashboard {
+    width: 85%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 5px 0;
+    gap: 5px;
+  }
 
+  .dashboard > button,
+  .dashboard > div {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
+  .dashboard > div > button {
+    width: 100%;
+  }
 
-    .dashboard {
+  .button {
+    width: 100%;
+    height: 45px;
+    margin-top: 0;
+    padding: 5px;
+    justify-content: center;
+    flex: 1;
+  }
 
-        background-color: purple;
-        width: 85%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        flex-direction: row;
-    }
+  .button h3 {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    .button {
-        background-color: orange;
-        width: 30%;
-        height:50% ;
-    }
+  .activebutton {
+    width: 100%;
+    height: 45px;
+    margin-top: 0;
+    padding: 5px;
+    justify-content: center;
+    flex: 1;
+  }
 
-    .activebutton {
+  .activebutton h3 {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-        background-color: orange;
-        width: 30%;
-        height:70% ;
-    }
+  .admindiv {
+    width: 15%;
+    height: auto;
+    padding: 5px;
+  }
 
-    .admindiv {
-        background-color: yellow;
-        width: 15%;
-    }
+  .admin {
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+  }
 
-    .admin {}
+  .admindiv .admintext h3,
+  .admindiv .admintext p {
+    display: none;
+  }
 
-    .admindiv .admintext h3,
-    .admindiv .admintext p {
-        display: none;
-    }
+  .rightdiv {
+    width: 100%;
+    flex: 1;
+  }
 
+  .rightheader {
+    width: 100%;
+    height: 60px;
+    padding: 0 15px;
+  }
+  .actionButton {
+    margin-left: 8px;
+    padding: 4px 8px;
+    background-color: #ffd700; /* Yellow */
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
+  .actionButton:hover {
+    background-color: #ffc300; /* Darker yellow on hover */
+  }
+
+  .actionButtonDelete {
+    margin-left: 4px;
+    padding: 4px 8px;
+    background-color: #ffd700; /* Yellow */
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .actionButtonDelete:hover {
+    background-color: #ffc300; /* Darker yellow on hover */
+  }
+
+  .rightheader h2 {
+    font-size: 18px;
+  }
+
+  .rightheaderinputdiv {
+    width: 100%;
+  }
+
+  .inputstyle {
+    width: 100%;
+    padding-left: 15px;
+    font-size: 14px;
+  }
+
+  .recordlist {
+    height: calc(100vh - 200px);
+    padding: 5px;
+  }
+
+  .listdiv {
+    height: auto;
+    min-height: 80px;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .leftlistdiv {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 5px;
+  }
+
+  .codediv {
+    width: auto;
+    padding-left: 10px;
+  }
+
+  .codediv h7 {
+    font-size: 12px;
+  }
+
+  .namediv {
+    width: auto;
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .namediv h3 {
+    font-size: 14px;
+  }
+
+  .statusdiv {
+    width: auto;
+  }
+
+  .statusdiv span {
+    font-size: 12px;
+  }
+
+  .receivediv {
+    width: auto;
+  }
+
+  .receivediv span {
+    font-size: 12px;
+  }
+
+  .deleverdiv {
+    width: auto;
+  }
+
+  .deleverdiv span {
+    font-size: 12px;
+  }
+
+  .Rightlistdiv {
+    width: 100%;
+    justify-content: flex-end;
+    padding: 5px 10px;
+    margin-top: 5px;
+  }
+
+  .menuDiv {
+    right: 10px;
+    top: 40px;
+    min-width: 100px;
+  }
+
+  .NewEntryDiv {
+    width: 100%;
+    height: calc(100vh - 120px);
+  }
+
+  .plusdiv {
+    height: 80px;
+    width: 80px;
+  }
+
+  .plusdiv h1 {
+    font-size: 50px;
+  }
+
+  .buttondiv h3 {
+    font-size: 16px;
+  }
+
+  /* Additional mobile improvements */
+  .menuContainer {
+    position: relative;
+  }
+
+  .moreIcon {
+    padding: 5px;
+  }
+
+  .MenuTextDiv,
+  .MenuTextDivDelete {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+
+  .MenuTextDiv p,
+  .MenuTextDivDelete p {
+    font-size: 14px;
+  }
+
+  /* Make images smaller on mobile */
+  .leftlistdiv img {
+    max-width: 35px !important;
+    max-height: 35px !important;
+  }
+
+  /* Adjust search bar */
+  .searchdiv {
+    border: none;
+    border-bottom: 1px solid rgb(212, 208, 208);
+  }
 }
