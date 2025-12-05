@@ -9,8 +9,7 @@ import { Setting } from "../../components/Setting/page";
 import { db } from "../../firebase/firebase";
 import { ref, onValue, remove } from "firebase/database";
 import Link from "next/link";
-
-
+import { useRouter } from "next/navigation";
 
 const Main = () => {
   const [dashboardbutton, setDashboardbutton] = useState("Records");
@@ -20,11 +19,13 @@ const Main = () => {
   const [showNewEntry, setShowNewEntry] = useState(false);
   const [more, setMore] = useState(false);
   const [records, setRecords] = useState([]);
-
+  console.log(records, "recordsddd");
 
   // Modal state for delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [recordToDelete, setRecordToDelete] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const entriesRef = ref(db, "entries");
@@ -192,7 +193,7 @@ const Main = () => {
 
             <div className={styles.recordlist}>
               {filteredRecords.map((record) => {
-                const status = record.deliveredDate ? "Delivered" : "Pending";
+                const status = record.status || "Pending";
                 return (
                   <div key={record.id} className={styles.listdiv}>
                     <div className={styles.leftlistdiv}>
@@ -218,13 +219,28 @@ const Main = () => {
                       >
                         <h3>{record.customerName}</h3>
                       </div>
-                      <div className={styles.statusdiv}>
-                       <Link href={`/statusRecord/${record.id}`}>
-                          <span style={{ color: status === "Pending" ? "red" : "green" }}>
-                            {status}
-                          </span>
-                        </Link>
-                      </div>
+                      <div
+  onClick={() => router.push("/statusRecord")}
+  className={styles.statusdiv}
+  style={{
+    backgroundColor: status === "Pending" ? "#ffcdd2" : "#c8e6c9", // light red / light green
+    borderRadius: "5px",
+    padding: "2px 6px",
+    display: "inline-block",
+    minWidth: "60px",
+    textAlign: "center",
+  }}
+>
+  <span
+    style={{
+      color: status === "Pending" ? "red" : "green", // text color
+      fontWeight: "bold",
+    }}
+  >
+    {status}
+  </span>
+</div>
+
 
                       <div className={styles.receivediv}>
                         <span>{record.receivingDate}</span>
