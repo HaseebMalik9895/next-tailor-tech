@@ -27,7 +27,7 @@ const Auth = () => {
     try {
       await signInWithEmailAndPassword(auth, name, password);
       router.push("/dashboard");
-    } catch (err) {
+    } catch {
       setError("Invalid login credentials!");
     }
   };
@@ -42,7 +42,7 @@ const Auth = () => {
       setName("");
       setPassword("");
       setPhone("");
-    } catch (err) {
+    } catch {
       setError("Registration failed. Try again.");
     }
   };

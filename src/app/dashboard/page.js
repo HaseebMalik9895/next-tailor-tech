@@ -2,14 +2,12 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./styles.module.css";
-import { FiPrinter, FiEye } from "react-icons/fi";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { MeasurementCard } from "../../components/measurementcard/page";
 import { NewEntry } from "../../components/NewEntry/page";
 import { Setting } from "../../components/Setting/page";
 import { db } from "../../firebase/firebase";
 import { ref, onValue, remove } from "firebase/database";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 
@@ -22,7 +20,6 @@ const Main = () => {
   const [showNewEntry, setShowNewEntry] = useState(false);
   const [more, setMore] = useState(false);
   const [records, setRecords] = useState([]);
-  const router = useRouter();
 
 
   // Modal state for delete
@@ -221,24 +218,12 @@ const Main = () => {
                       >
                         <h3>{record.customerName}</h3>
                       </div>
-                      <div
-                        className={styles.statusdiv}
-                        // onClick={
-                        //   () => router.push('/StatusRecord') // navigate to statusRecord page with record id
-                        // }
-                      >
+                      <div className={styles.statusdiv}>
                        <Link href={`/statusRecord/${record.id}`}>
-    <span style={{ color: status === "Pending" ? "red" : "green" }}>
-      {status}
-    </span>
-  </Link>
-                        <span
-                          style={{
-                            color: status === "Pending" ? "red" : "green",
-                          }}
-                        >
-                          {status}
-                        </span>
+                          <span style={{ color: status === "Pending" ? "red" : "green" }}>
+                            {status}
+                          </span>
+                        </Link>
                       </div>
 
                       <div className={styles.receivediv}>
