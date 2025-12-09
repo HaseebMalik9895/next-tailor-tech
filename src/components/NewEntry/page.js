@@ -21,6 +21,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     const [status, setStatus] = useState('Pending');
     const [showDropdown, setShowDropdown] = useState(false);
     const [numberOfSuits, setNumberOfSuits] = useState('');
+    const [errors, setErrors] = useState({});
 
     const options = ['Pending', 'Delivered'];
 
@@ -103,7 +104,60 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
         setShowDropdown(false);
     };
 
-    const handleSaveClick = () => setModal(true);
+    const validateForm = () => {
+        const newErrors = {};
+
+        // Check required fields
+        if (!customerName.trim()) {
+            newErrors.customerName = 'Customer Name is required';
+        }
+        if (!deliveredDate.trim()) {
+            newErrors.customerName = 'deliveredDate is required';
+        }
+        if (!phone.trim()) {
+            newErrors.phone = 'Phone Number is required';
+        }
+        if (!code.trim()) {
+            newErrors.code = 'Code is required';
+        }
+        if (!currentDate) {
+            newErrors.currentDate = 'Receiving Date is required';
+        }
+        if (!numberOfSuits.trim()) {
+            newErrors.numberOfSuits = 'Number of Suits is required';
+        }
+
+        // Check all measurements are filled
+        for (let name of inputNames) {
+            if (!measurements[name] || measurements[name].trim() === '') {
+                newErrors[name] = 'Required';
+            }
+        }
+
+        // Check all radio buttons are selected
+        if (!radios.hem) {
+            newErrors.hem = 'Please select an option';
+        }
+        if (!radios.collar) {
+            newErrors.collar = 'Please select an option';
+        }
+        if (!radios.stitching) {
+            newErrors.stitching = 'Please select an option';
+        }
+
+        if (!description.trim()) {
+            newErrors.description = 'Description is required';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSaveClick = () => {
+        if (validateForm()) {
+            setModal(true);
+        }
+    };
 
   const confirmSave = async () => {
     try {
@@ -188,6 +242,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
               onChange={(e) => setNumberOfSuits(e.target.value)}
               // placeholder="0"
             />
+            {errors.numberOfSuits && <span className={styles.errorText}>{errors.numberOfSuits}</span>}
           </div>
         </div>
 
@@ -220,6 +275,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
             value={deliveredDate}
             onChange={(e) => setDeliveredDate(e.target.value)}
           />
+           {errors.customerName && <span className={styles.errorText}>{errors.customerName}</span>}
           {/* Delivered Status Dropdown */}
           <div
             style={{
@@ -309,6 +365,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
             />
+            {errors.customerName && <span className={styles.errorText}>{errors.customerName}</span>}
           </div>
           <div className={styles.PHDiv}>
             <p>Phone Number</p>
@@ -319,6 +376,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
+            {errors.phone && <span className={styles.errorText}>{errors.phone}</span>}
           </div>
           <div className={styles.CodeDiv}>
             <p>Code</p>
@@ -332,6 +390,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                 backgroundColor: (!recordToEdit && !isNewOrder) ? "#023047" : "white",
               }}
             />
+            {errors.code && <span className={styles.errorText}>{errors.code}</span>}
           </div>
         </div>
 
@@ -341,12 +400,16 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
             {inputNames.map((name, idx) => (
               <div key={idx} className={styles.griditem}>
                 <label className={styles.label}>{name}:</label>
-                <input
-                  type="text"
-                  className={styles.Inputs}
-                  value={measurements[name] || ""}
-                  onChange={(e) => handleMeasurementChange(name, e.target.value)}
-                />
+                <div style={{ width: '60%' }}>
+                  <input
+                    type="number"
+                    step="0.1"
+                    className={styles.Inputs}
+                    value={measurements[name] || ""}
+                    onChange={(e) => handleMeasurementChange(name, e.target.value)}
+                  />
+                  {errors[name] && <span className={styles.errorText}>{errors[name]}</span>}
+                </div>
               </div>
             ))}
           </div>
@@ -370,6 +433,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                   <label htmlFor={val}>{val.charAt(0).toUpperCase() + val.slice(1)}</label>
                 </div>
               ))}
+              {errors.hem && <span className={styles.errorText}>{errors.hem}</span>}
             </div>
 
             {/* Collar */}
@@ -389,6 +453,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                   <label htmlFor={val}>{val}</label>
                 </div>
               ))}
+              {errors.collar && <span className={styles.errorText}>{errors.collar}</span>}
             </div>
 
             {/* Stitching */}
@@ -408,13 +473,17 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                   <label htmlFor={val}>{val}</label>
                 </div>
               ))}
+              {errors.stitching && <span className={styles.errorText}>{errors.stitching}</span>}
             </div>
           </div>
 
                     {/* Description */}
                     <div className={styles.DetailInputDiv}>
                         <h3>Description </h3>
-                        <textarea placeholder="Enter details here..." value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <div style={{ width: '80%' }}>
+                          <textarea placeholder="Enter details here..." value={description} onChange={(e) => setDescription(e.target.value)} />
+                          {errors.description && <span className={styles.errorText}>{errors.description}</span>}
+                        </div>
                     </div>
                 </div>
 

@@ -202,12 +202,12 @@ const Main = () => {
               <h3>History</h3>
             </button>
             <div style={{ position: "relative", width: "100%" }}>
-              <button
+              {/* <button
                 className={more ? styles.activebutton : styles.button}
                 onClick={() => setMore((prev) => !prev)}
               >
                 <h3>More</h3>
-              </button>
+              </button> */}
               {more && <Setting />}
             </div>
           </div>

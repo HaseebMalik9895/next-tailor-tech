@@ -146,30 +146,30 @@
     }
 
     .DetailParentDiv {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .DetailDiv {
-        width: 100%;
+        width: 50%;
     }
 
     .DetailDiv p {
-        margin: 5px 10px;
-        font-size: 14px;
+        margin: 5px;
+        font-size: 12px;
     }
 
     .DescriptionParentDiv {
-        flex-direction: column;
+        flex-direction: row;
         padding: 10px;
         margin: 5px;
     }
 
     .DescriptionDiv {
-        width: 100%;
+        width: 50%;
     }
 
     .DescriptionDiv p {
-        font-size: 13px;
+        font-size: 12px;
         line-height: 1.5;
     }
 }
