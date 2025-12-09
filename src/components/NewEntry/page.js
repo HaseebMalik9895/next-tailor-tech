@@ -4,9 +4,9 @@ import styles from './page.module.css';
 import Image from 'next/image';
 import { FaCamera } from 'react-icons/fa';
 import { db } from "../../firebase/firebase";
-import { ref, push, set } from "firebase/database";
+import { ref, push, set, get } from "firebase/database";
 
-const NewEntry = ({ recordToEdit }) => {
+const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [currentDate, setCurrentDate] = useState('');
     const [deliveredDate, setDeliveredDate] = useState('');
@@ -18,6 +18,11 @@ const NewEntry = ({ recordToEdit }) => {
     const [description, setDescription] = useState('');
     const [measurements, setMeasurements] = useState({});
     const [radios, setRadios] = useState({ hem: '', collar: '', stitching: '' });
+    const [status, setStatus] = useState('Pending');
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [numberOfSuits, setNumberOfSuits] = useState('');
+
+    const options = ['Pending', 'Delivered'];
 
     const inputNames = [
         'Length', 'Chest', 'Waist', 'Shoulder', 'Arm',
@@ -31,18 +36,52 @@ const NewEntry = ({ recordToEdit }) => {
         setCurrentDate(today.toISOString().split('T')[0]);
 
         if (recordToEdit) {
-            // Prefill form fields for editing
-            setCustomerName(recordToEdit.customerName || '');
-            setPhone(recordToEdit.phone || '');
-            setCode(recordToEdit.code || '');
-            setDescription(recordToEdit.description || '');
-            setMeasurements(recordToEdit.measurements || {});
-            setRadios(recordToEdit.radios || { hem: '', collar: '', stitching: '' });
-            setCurrentDate(recordToEdit.receivingDate || today.toISOString().split('T')[0]);
-            setDeliveredDate(recordToEdit.deliveredDate || '');
-            setSelectedImage(recordToEdit.image || null);
+            if (isNewOrder) {
+                // New order: prefill customer data but reset dates and status
+                setCustomerName(recordToEdit.customerName || '');
+                setPhone(recordToEdit.phone || '');
+                setCode(recordToEdit.code || ''); // Keep same code for customer
+                setDescription(recordToEdit.description || '');
+                setMeasurements(recordToEdit.measurements || {});
+                setRadios(recordToEdit.radios || { hem: '', collar: '', stitching: '' });
+                setSelectedImage(recordToEdit.image || null);
+                setCurrentDate(today.toISOString().split('T')[0]); // New date
+                setDeliveredDate(''); // Reset delivered date
+                setStatus('Pending'); // Reset to pending
+                setNumberOfSuits('');
+            } else {
+                // Edit existing: prefill all fields
+                setCustomerName(recordToEdit.customerName || '');
+                setPhone(recordToEdit.phone || '');
+                setCode(recordToEdit.code || '');
+                setDescription(recordToEdit.description || '');
+                setMeasurements(recordToEdit.measurements || {});
+                setRadios(recordToEdit.radios || { hem: '', collar: '', stitching: '' });
+                setCurrentDate(recordToEdit.receivingDate || today.toISOString().split('T')[0]);
+                setDeliveredDate(recordToEdit.deliveredDate || '');
+                setSelectedImage(recordToEdit.image || null);
+                setStatus(recordToEdit.status || 'Pending');
+                setNumberOfSuits(recordToEdit.numberOfSuits || '');
+            }
+        } else {
+            // Auto-generate code for new entry
+            const fetchLastCode = async () => {
+                const entriesRef = ref(db, "entries");
+                const snapshot = await get(entriesRef);
+                
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const codes = Object.values(data).map(entry => parseInt(entry.code) || 0);
+                    const maxCode = Math.max(...codes, 999); // Start from 1000 if no entries
+                    setCode(String(maxCode + 1));
+                } else {
+                    setCode("1000"); // First entry starts at 1000
+                }
+            };
+            
+            fetchLastCode();
         }
-    }, [recordToEdit]);
+    }, [recordToEdit, isNewOrder]);
 
     const handleMeasurementChange = (name, value) => {
         setMeasurements(prev => ({ ...prev, [name]: value }));
@@ -59,6 +98,11 @@ const NewEntry = ({ recordToEdit }) => {
         }
     };
 
+    const handleSelect = (option) => {
+        setStatus(option);
+        setShowDropdown(false);
+    };
+
     const handleSaveClick = () => setModal(true);
 
   const confirmSave = async () => {
@@ -72,14 +116,17 @@ const NewEntry = ({ recordToEdit }) => {
         description,
         receivingDate: currentDate,
         deliveredDate,
-        status, // ✅ include delivered status
+        status,
+        numberOfSuits,
         image: selectedImage || null,
       };
 
-      if (recordToEdit) {
+      if (recordToEdit && !isNewOrder) {
+        // Update existing record
         const recordRef = ref(db, `entries/${recordToEdit.id}`);
         await set(recordRef, entryData);
       } else {
+        // Create new entry (either completely new or new order for existing customer)
         const entryRef = ref(db, "entries");
         const newEntryRef = push(entryRef);
         await set(newEntryRef, entryData);
@@ -87,16 +134,34 @@ const NewEntry = ({ recordToEdit }) => {
 
       setModal(false);
 
-      // Reset form
+      // Reset form and generate next code
       setCustomerName("");
       setPhone("");
-      setCode("");
       setMeasurements({});
       setRadios({ hem: "", collar: "", stitching: "" });
       setDescription("");
       setSelectedImage(null);
       setDeliveredDate("");
-      setStatus(""); // ✅ reset status
+      setStatus("Pending");
+      setNumberOfSuits("");
+      
+      // Generate next code
+      const entriesRef = ref(db, "entries");
+      const snapshot = await get(entriesRef);
+      
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const codes = Object.values(data).map(entry => parseInt(entry.code) || 0);
+        const maxCode = Math.max(...codes, 999);
+        setCode(String(maxCode + 1));
+      } else {
+        setCode("1000");
+      }
+
+      // Navigate to Records screen after save
+      if (onSaveSuccess) {
+        onSaveSuccess();
+      }
     } catch (err) {
       alert("Error saving entry: " + err.message);
     }
@@ -117,11 +182,12 @@ const NewEntry = ({ recordToEdit }) => {
           <div>
             <label className={styles.label}>No. of Suits: </label>
             <input
-            // type="date
-            className={styles.Suit}
-            // value={currentDate}
-            // onChange={(e) => setCurrentDate(e.target.value)}
-          />
+              // type="number"
+              className={styles.Suit}
+              value={numberOfSuits}
+              onChange={(e) => setNumberOfSuits(e.target.value)}
+              // placeholder="0"
+            />
           </div>
         </div>
 
@@ -261,6 +327,10 @@ const NewEntry = ({ recordToEdit }) => {
               placeholder="Code"
               value={code}
               onChange={(e) => setCode(e.target.value)}
+              readOnly={!recordToEdit && !isNewOrder}
+              style={{
+                backgroundColor: (!recordToEdit && !isNewOrder) ? "#023047" : "white",
+              }}
             />
           </div>
         </div>
@@ -350,7 +420,9 @@ const NewEntry = ({ recordToEdit }) => {
 
                 {/* Save Button */}
                 <div className={styles.SaveButtonDiv}>
-                    <button className={styles.SaveButton} onClick={handleSaveClick}>{recordToEdit ? "Update" : "Save"}</button>
+                    <button className={styles.SaveButton} onClick={handleSaveClick}>
+                  {recordToEdit && !isNewOrder ? "Update" : "Save"}
+                </button>
                 </div>
 
                 {/* Confirmation Modal */}
@@ -358,10 +430,12 @@ const NewEntry = ({ recordToEdit }) => {
                     <div className={styles.congratulationMaindiv}>
                         <div className={styles.congratulationparentdiv}>
                             <div className={styles.congTextDiv}>
-                                <h3>Are You Sure To {recordToEdit ? "Update" : "Save"} <br /> The Entry?</h3>
+                                <h3>Are You Sure To {recordToEdit && !isNewOrder ? "Update" : "Save"} <br /> The Entry?</h3>
                             </div>
                             <div className={styles.congButtonDiv}>
-                                <button className={styles.CongButton} onClick={confirmSave}>{recordToEdit ? "Update" : "Save"}</button>
+                                <button className={styles.CongButton} onClick={confirmSave}>
+                                  {recordToEdit && !isNewOrder ? "Update" : "Save"}
+                                </button>
                                 <button className={styles.CongButton} onClick={() => setModal(false)}>Cancel</button>
                             </div>
                         </div>

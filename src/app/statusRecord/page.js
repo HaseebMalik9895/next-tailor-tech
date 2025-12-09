@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { db } from "../../../firebase/firebase";
+import { db } from "../../firebase/firebase";
 import { ref, get, update } from "firebase/database";
 
 const StatusRecord = () => {

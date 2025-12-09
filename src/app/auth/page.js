@@ -26,7 +26,7 @@ const Auth = () => {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, name, password);
-      router.push("/dashboard");
+      router.replace("/dashboard"); // Use replace instead of push to prevent back navigation
     } catch (err) {
       setError("Invalid login credentials!");
     }

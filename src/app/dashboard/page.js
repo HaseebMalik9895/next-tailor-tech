@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./styles.module.css";
-import { FiPrinter, FiEye } from "react-icons/fi";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { MeasurementCard } from "../../components/measurementcard/page";
 import { NewEntry } from "../../components/NewEntry/page";
@@ -10,7 +9,6 @@ import { Setting } from "../../components/Setting/page";
 import { db } from "../../firebase/firebase";
 import { ref, onValue, remove } from "firebase/database";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 
 
@@ -22,6 +20,7 @@ const Main = () => {
   const [showNewEntry, setShowNewEntry] = useState(false);
   const [more, setMore] = useState(false);
   const [records, setRecords] = useState([]);
+  const [isNewOrder, setIsNewOrder] = useState(false);
   const router = useRouter();
 
 
@@ -46,11 +45,60 @@ const Main = () => {
     return () => unsubscribe();
   }, []);
 
+  // Handle new order from customer profile
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const newOrderId = urlParams.get("newOrder");
+    
+    if (newOrderId) {
+      const record = records.find((r) => r.id === newOrderId);
+      if (record) {
+        setSelectedRecord(record);
+        setIsNewOrder(true);
+        setDashboardbutton("New entry");
+        setShowNewEntry(true);
+        // Clear URL parameter
+        window.history.replaceState({}, "", "/dashboard");
+      }
+    }
+  }, [records]);
+
+  // Prevent back navigation to login page
+  useEffect(() => {
+    const handlePopState = () => {
+      // Stay on dashboard, don't go back
+      window.history.pushState(null, "", window.location.href);
+    };
+
+    // Push initial state
+    window.history.pushState(null, "", window.location.href);
+    
+    // Listen for back button
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  // Filter records based on search and status
   const filteredRecords = records.filter(
     (record) =>
       record.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.code.includes(searchTerm)
   );
+
+  // Pending records for Records section
+  const pendingRecords = filteredRecords.filter((record) => {
+    const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+    return status === "Pending";
+  });
+
+  // Delivered records for History section
+  const deliveredRecords = filteredRecords.filter((record) => {
+    const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+    return status === "Delivered";
+  });
 
   const handleMeasurementClick = (record) => {
     setSelectedRecord(record);
@@ -208,10 +256,15 @@ const Main = () => {
             </div>
 
             <div className={styles.recordlist}>
-              {filteredRecords.map((record) => {
-                const status = record.deliveredDate ? "Delivered" : "Pending";
-                return (
-                  <div key={record.id} className={styles.listdiv}>
+              {pendingRecords.length === 0 ? (
+                <div style={{ padding: "20px", textAlign: "center", color: "#666" }}>
+                  <p>No pending records found</p>
+                </div>
+              ) : (
+                pendingRecords.map((record) => {
+                  const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+                  return (
+                    <div key={record.id} className={styles.listdiv}>
                     <div className={styles.leftlistdiv}>
                       <Image
                         src={record.image || "/person1.png"}
@@ -262,7 +315,7 @@ const Main = () => {
                         <span>{record.receivingDate}</span>
                       </div>
                       <div className={styles.deleverdiv}>
-                        <span>{record.deliveredDate}</span>
+                        <span>{record.deliveredDate || "-"}</span>
                       </div>
                     </div>
 
@@ -283,7 +336,8 @@ const Main = () => {
                     </div>
                   </div>
                 );
-              })}
+              })
+              )}
             </div>
 
             {showMeasurementCard && (
@@ -325,7 +379,16 @@ const Main = () => {
         {/* NEW ENTRY */}
         {dashboardbutton === "New entry" && showNewEntry && (
           <div className={styles.NewEntryDiv}>
-            <NewEntry recordToEdit={selectedRecord} />
+            <NewEntry 
+              recordToEdit={selectedRecord}
+              isNewOrder={isNewOrder}
+              onSaveSuccess={() => {
+                setDashboardbutton("Records");
+                setShowNewEntry(false);
+                setSelectedRecord(null);
+                setIsNewOrder(false);
+              }}
+            />
           </div>
         )}
 
@@ -344,15 +407,20 @@ const Main = () => {
             </div>
 
             <div className={styles.recordlist}>
-              {filteredRecords.map((record) => {
-                const status = record.deliveredDate ? "Delivered" : "Pending";
-                return (
-                  <div 
-                    key={record.id} 
-                    className={styles.listdiv}
-                    onClick={() => router.push(`/history?id=${record.id}`)}
-                    style={{ cursor: "pointer" }}
-                  >
+              {deliveredRecords.length === 0 ? (
+                <div style={{ padding: "20px", textAlign: "center", color: "#666" }}>
+                  <p>No delivered records found</p>
+                </div>
+              ) : (
+                deliveredRecords.map((record) => {
+                  const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+                  return (
+                    <div 
+                      key={record.id} 
+                      className={styles.listdiv}
+                      onClick={() => router.push(`/customer/${record.id}`)}
+                      style={{ cursor: "pointer" }}
+                    >
                     <div className={styles.leftlistdiv}>
                       <Image
                         src={record.image || "/person1.png"}
@@ -404,7 +472,8 @@ const Main = () => {
                     </div>
                   </div>
                 );
-              })}
+              })
+              )}
             </div>
           </div>
         )}
