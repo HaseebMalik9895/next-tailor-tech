@@ -61,152 +61,285 @@ const NewEntry = ({ recordToEdit }) => {
 
     const handleSaveClick = () => setModal(true);
 
-    const confirmSave = async () => {
-        try {
-            if (recordToEdit) {
-                // Update existing record
-                const recordRef = ref(db, `entries/${recordToEdit.id}`);
-                await set(recordRef, {
-                    customerName,
-                    phone,
-                    code,
-                    measurements,
-                    radios,
-                    description,
-                    receivingDate: currentDate,
-                    deliveredDate,
-                    image: selectedImage || null
-                });
-                // alert('Entry updated successfully!');
-            } else {
-                // Create new entry
-                const entryRef = ref(db, 'entries');
-                const newEntryRef = push(entryRef);
-                await set(newEntryRef, {
-                    customerName,
-                    phone,
-                    code,
-                    measurements,
-                    radios,
-                    description,
-                    receivingDate: currentDate,
-                    deliveredDate,
-                    image: selectedImage || null
-                });
-                // alert('Entry saved successfully!');
-            }
+  const confirmSave = async () => {
+    try {
+      const entryData = {
+        customerName,
+        phone,
+        code,
+        measurements,
+        radios,
+        description,
+        receivingDate: currentDate,
+        deliveredDate,
+        status, // ✅ include delivered status
+        image: selectedImage || null,
+      };
 
-            setModal(false);
+      if (recordToEdit) {
+        const recordRef = ref(db, `entries/${recordToEdit.id}`);
+        await set(recordRef, entryData);
+      } else {
+        const entryRef = ref(db, "entries");
+        const newEntryRef = push(entryRef);
+        await set(newEntryRef, entryData);
+      }
 
-            // Reset form
-            setCustomerName('');
-            setPhone('');
-            setCode('');
-            setMeasurements({});
-            setRadios({ hem: '', collar: '', stitching: '' });
-            setDescription('');
-            setSelectedImage(null);
-            setDeliveredDate('');
-        } catch (err) {
-            alert('Error saving entry: ' + err.message);
-        }
-    };
+      setModal(false);
 
-    return (
-        <div className={styles.ParentDiv}>
-            {/* Top Section: Dates + Image */}
-            <div className={styles.TopDiv}>
-                <div>
-                    <label className={styles.label}>Receiving Date: </label>
-                    <input type="date" className={styles.DateInputs} value={currentDate} onChange={(e) => setCurrentDate(e.target.value)} />
+      // Reset form
+      setCustomerName("");
+      setPhone("");
+      setCode("");
+      setMeasurements({});
+      setRadios({ hem: "", collar: "", stitching: "" });
+      setDescription("");
+      setSelectedImage(null);
+      setDeliveredDate("");
+      setStatus(""); // ✅ reset status
+    } catch (err) {
+      alert("Error saving entry: " + err.message);
+    }
+  };
+
+  return (
+    <div className={styles.ParentDiv}>
+      {/* Top Section: Dates + Image */}
+      <div className={styles.TopDiv}>
+        <div>
+          <label className={styles.label}>Receiving Date: </label>
+          <input
+            type="date"
+            className={styles.DateInputs}
+            value={currentDate}
+            onChange={(e) => setCurrentDate(e.target.value)}
+          />
+          <div>
+            <label className={styles.label}>No. of Suits: </label>
+            <input
+            // type="date
+            className={styles.Suit}
+            // value={currentDate}
+            // onChange={(e) => setCurrentDate(e.target.value)}
+          />
+          </div>
+        </div>
+
+        <div className={styles.MainImageDiv}>
+          <div className={styles.ImageDiv}>
+            <Image
+              className={styles.SelectedImage}
+              src={selectedImage || "/person1.png"}
+              alt="Circular Image"
+              width={150}
+              height={150}
+            />
+          </div>
+          <label className={styles.CameraButton}>
+            <FaCamera size={20} color="black" />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+          </label>
+        </div>
+
+        <div>
+          <label className={styles.label}>Delivered Date: </label>
+          <input
+            type="date"
+            className={styles.DateInputs}
+            value={deliveredDate}
+            onChange={(e) => setDeliveredDate(e.target.value)}
+          />
+          {/* Delivered Status Dropdown */}
+          <div
+            style={{
+              marginTop: "10px",
+              position: "relative",
+              width: "350px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <label
+              style={{ color: "black", fontWeight: "600", fontSize: "14px" }}
+            >
+              Delivered Status:
+            </label>
+            <input
+              type="text"
+              value={status}
+              readOnly
+              onClick={() => setShowDropdown(!showDropdown)}
+              placeholder="Select status"
+              style={{
+                background: "linear-gradient(to bottom, #fb8500, #ffb703)",
+                padding: "8px",
+                cursor: "pointer",
+                width: "150px",
+                border: "none",
+                borderRadius: "5px",
+                fontSize: "18px",
+                color: "white",
+              }}
+            />
+            {showDropdown && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: "125px",
+                  width: "150px",
+                  zIndex: 1000,
+                  color: "black",
+                  border: "none",
+                }}
+              >
+                {options.map((option) => (
+                  <div
+                    key={option}
+                    onClick={() => handleSelect(option)}
+                    style={{
+                      padding: "8px",
+                      cursor: "pointer",
+                      background: "white",
+                      transition: "all 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background =
+                        "linear-gradient(to right, #fb8500, #ffb703)";
+                      e.currentTarget.style.fontWeight = "700";
+                      e.currentTarget.style.fontSize = "18px";
+                      e.currentTarget.style.color = "white";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "white";
+                      e.currentTarget.style.fontWeight = "400";
+                      e.currentTarget.style.fontSize = "16px";
+                      e.currentTarget.style.color = "black";
+                    }}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Middle Section: Customer Info */}
+      <div className={styles.MidDiv}>
+        <div className={styles.MidFirstDiv}>
+          <div className={styles.NameDiv}>
+            <p>Customer Name</p>
+            <input
+              className={styles.nameinput}
+              placeholder="Customer Name"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+            />
+          </div>
+          <div className={styles.PHDiv}>
+            <p>Phone Number</p>
+            <input
+              type="search"
+              className={styles.nameinput}
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className={styles.CodeDiv}>
+            <p>Code</p>
+            <input
+              className={styles.nameinput}
+              placeholder="Code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Measurements */}
+        <div className={styles.BottomDiv}>
+          <div className={styles.gridcontainer}>
+            {inputNames.map((name, idx) => (
+              <div key={idx} className={styles.griditem}>
+                <label className={styles.label}>{name}:</label>
+                <input
+                  type="text"
+                  className={styles.Inputs}
+                  value={measurements[name] || ""}
+                  onChange={(e) => handleMeasurementChange(name, e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Radio Buttons */}
+          <div className={styles.CheckBoxDiv}>
+            {/* Hem */}
+            <div className={styles.HimDiv}>
+              <h3>Hem / گھیرا</h3>
+              {["round", "square"].map((val) => (
+                <div className={styles.HimInput} key={val}>
+                  <input
+                    type="radio"
+                    name="hem"
+                    value={val}
+                    id={val}
+                    className={styles.CustomRadio}
+                    checked={radios.hem === val}
+                    onChange={(e) => handleRadioChange("hem", e.target.value)}
+                  />
+                  <label htmlFor={val}>{val.charAt(0).toUpperCase() + val.slice(1)}</label>
                 </div>
-                <div className={styles.MainImageDiv}>
-                    <div className={styles.ImageDiv}>
-                        <Image
-                            className={styles.SelectedImage}
-                            src={selectedImage || "/person1.png"}
-                            alt="Circular Image"
-                            width={150}
-                            height={150}
-                        />
-                    </div>
-                    <label className={styles.CameraButton}>
-                        <FaCamera size={20} color="black" />
-                        <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} />
-                    </label>
-                </div>
-                <div>
-                    <label className={styles.label}>Delivered Date: </label>
-                    <input type="date" className={styles.DateInputs} value={deliveredDate} onChange={(e) => setDeliveredDate(e.target.value)} />
-                </div>
+              ))}
             </div>
 
-            {/* Middle Section: Customer Info */}
-            <div className={styles.MidDiv}>
-                <div className={styles.MidFirstDiv}>
-                    <div className={styles.NameDiv}>
-                        <p>Customer Name</p>
-                        <input className={styles.nameinput} placeholder="Customer Name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-                    </div>
-                    <div className={styles.PHDiv}>
-                        <p>Phone Number</p>
-                        <input type="search" className={styles.nameinput} placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                    </div>
-                    <div className={styles.CodeDiv}>
-                        <p>Code</p>
-                        <input className={styles.nameinput} placeholder="Code" value={code} onChange={(e) => setCode(e.target.value)} />
-                    </div>
+            {/* Collar */}
+            <div className={styles.HimDiv}>
+              <h3>Collar / کالر </h3>
+              {["Collar", "Bain"].map((val) => (
+                <div className={styles.HimInput} key={val}>
+                  <input
+                    type="radio"
+                    name="Collar"
+                    value={val}
+                    id={val}
+                    className={styles.CustomRadio}
+                    checked={radios.collar === val}
+                    onChange={(e) => handleRadioChange("collar", e.target.value)}
+                  />
+                  <label htmlFor={val}>{val}</label>
                 </div>
+              ))}
+            </div>
 
-                {/* Measurements */}
-                <div className={styles.BottomDiv}>
-                    <div className={styles.gridcontainer}>
-                        {inputNames.map((name, idx) => (
-                            <div key={idx} className={styles.griditem}>
-                                <label className={styles.label}>{name}:</label>
-                                <input type="text" className={styles.Inputs} value={measurements[name] || ''} onChange={(e) => handleMeasurementChange(name, e.target.value)} />
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Radio Buttons */}
-                    <div className={styles.CheckBoxDiv}>
-                        <div className={styles.HimDiv}>
-                            <h3>Hem / گھیرا</h3>
-                            <div className={styles.HimInput}>
-                                <input type="radio" name="hem" value="round" id="round" className={styles.CustomRadio} checked={radios.hem === 'round'} onChange={(e) => handleRadioChange('hem', e.target.value)} />
-                                <label htmlFor="round">Round / گول</label>
-                            </div>
-                            <div className={styles.HimInput}>
-                                <input type="radio" name="hem" value="square" id="square" className={styles.CustomRadio} checked={radios.hem === 'square'} onChange={(e) => handleRadioChange('hem', e.target.value)} />
-                                <label htmlFor="square">Square /چورس</label>
-                            </div>
-                        </div>
-
-                        <div className={styles.HimDiv}>
-                            <h3>Collar / کالر </h3>
-                            <div className={styles.HimInput}>
-                                <input type="radio" name="Collar" value="Collar" id="Collar" className={styles.CustomRadio} checked={radios.collar === 'Collar'} onChange={(e) => handleRadioChange('collar', e.target.value)} />
-                                <label htmlFor="Collar">Collar /  کالر</label>
-                            </div>
-                            <div className={styles.HimInput}>
-                                <input type="radio" name="Collar" value="Bain" id="Bain" className={styles.CustomRadio} checked={radios.collar === 'Bain'} onChange={(e) => handleRadioChange('collar', e.target.value)} />
-                                <label htmlFor="Bain">Bain /بین</label>
-                            </div>
-                        </div>
-
-                        <div className={styles.HimDiv}>
-                            <h3>Stitching / سلائی </h3>
-                            <div className={styles.HimInput}>
-                                <input type="radio" name="Stitching" value="Single" id="Single" className={styles.CustomRadio} checked={radios.stitching === 'Single'} onChange={(e) => handleRadioChange('stitching', e.target.value)} />
-                                <label htmlFor="Single">Single / سنگل</label>
-                            </div>
-                            <div className={styles.HimInput}>
-                                <input type="radio" name="Stitching" value="Double" id="Double" className={styles.CustomRadio} checked={radios.stitching === 'Double'} onChange={(e) => handleRadioChange('stitching', e.target.value)} />
-                                <label htmlFor="Double">Double /ڈبل</label>
-                            </div>
-                        </div>
-                    </div>
+            {/* Stitching */}
+            <div className={styles.HimDiv}>
+              <h3>Stitching / سلائی </h3>
+              {["Single", "Double"].map((val) => (
+                <div className={styles.HimInput} key={val}>
+                  <input
+                    type="radio"
+                    name="Stitching"
+                    value={val}
+                    id={val}
+                    className={styles.CustomRadio}
+                    checked={radios.stitching === val}
+                    onChange={(e) => handleRadioChange("stitching", e.target.value)}
+                  />
+                  <label htmlFor={val}>{val}</label>
+                </div>
+              ))}
+            </div>
+          </div>
 
                     {/* Description */}
                     <div className={styles.DetailInputDiv}>

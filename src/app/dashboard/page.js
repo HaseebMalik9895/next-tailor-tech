@@ -137,6 +137,20 @@ const Main = () => {
             >
               <h3>New entry</h3>
             </button>
+             <button
+              className={
+                dashboardbutton === "History"
+                  ? styles.activebutton
+                  : styles.button
+              }
+              onClick={() => {
+                setDashboardbutton("History");
+                setMore(false);
+                setShowNewEntry(false);
+              }}
+            >
+              <h3>History</h3>
+            </button>
             <div style={{ position: "relative", width: "100%" }}>
               <button
                 className={more ? styles.activebutton : styles.button}
@@ -222,19 +236,22 @@ const Main = () => {
                         <h3>{record.customerName}</h3>
                       </div>
                       <div
+                        onClick={() => router.push("/statusRecord")}
                         className={styles.statusdiv}
-                        // onClick={
-                        //   () => router.push('/StatusRecord') // navigate to statusRecord page with record id
-                        // }
+                        style={{
+                          backgroundColor:
+                            status === "Pending" ? "#ffcdd2" : "#c8e6c9", // light red / light green
+                          borderRadius: "5px",
+                          padding: "2px 6px",
+                          display: "inline-block",
+                          minWidth: "60px",
+                          textAlign: "center",
+                        }}
                       >
-                       <Link href={`/statusRecord/${record.id}`}>
-    <span style={{ color: status === "Pending" ? "red" : "green" }}>
-      {status}
-    </span>
-  </Link>
                         <span
                           style={{
-                            color: status === "Pending" ? "red" : "green",
+                            color: status === "Pending" ? "red" : "green", // text color
+                            fontWeight: "bold",
                           }}
                         >
                           {status}
@@ -311,6 +328,87 @@ const Main = () => {
             <NewEntry recordToEdit={selectedRecord} />
           </div>
         )}
+
+        {/* HISTORY */}
+        {dashboardbutton === "History" && (
+          <div className={styles.rightchilddiv}>
+            <div className={styles.searchdiv}>
+              <div className={styles.rightheaderinputdiv}>
+                <input
+                  className={styles.inputstyle}
+                  placeholder="Search history"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.recordlist}>
+              {filteredRecords.map((record) => {
+                const status = record.deliveredDate ? "Delivered" : "Pending";
+                return (
+                  <div 
+                    key={record.id} 
+                    className={styles.listdiv}
+                    onClick={() => router.push(`/history?id=${record.id}`)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className={styles.leftlistdiv}>
+                      <Image
+                        src={record.image || "/person1.png"}
+                        layout="responsive"
+                        width={50}
+                        height={50}
+                        alt="person"
+                        style={{
+                          width: "50%",
+                          height: "auto",
+                          maxWidth: "40px",
+                          maxHeight: "40px",
+                        }}
+                      />
+                      <div className={styles.codediv}>
+                        <h7>{record.code}</h7>
+                      </div>
+                      <div className={styles.namediv}>
+                        <h3>{record.customerName}</h3>
+                      </div>
+                      <div
+                        className={styles.statusdiv}
+                        style={{
+                          backgroundColor:
+                            status === "Pending" ? "#ffcdd2" : "#c8e6c9",
+                          borderRadius: "5px",
+                          padding: "2px 6px",
+                          display: "inline-block",
+                          minWidth: "60px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: status === "Pending" ? "red" : "green",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {status}
+                        </span>
+                      </div>
+
+                      <div className={styles.receivediv}>
+                        <span>{record.receivingDate}</span>
+                      </div>
+                      <div className={styles.deleverdiv}>
+                        <span>{record.deliveredDate || "-"}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

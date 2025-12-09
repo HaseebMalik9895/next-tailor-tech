@@ -149,6 +149,22 @@
     color: aliceblue;
     font-weight: 400;
 }
+.Suit,
+.Inputs {
+    background: linear-gradient(to bottom, #fb8500, #ffb703);
+    border-radius: 7px;
+    height: 40px;
+    width: 60%;
+    outline: none;
+    padding: 5px;
+    box-sizing: border-box;
+    border: none;
+    font-size: 18px;
+    color: aliceblue;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-left: 18px;
+}
 
 .Inputs {
     font-size: 24px;
