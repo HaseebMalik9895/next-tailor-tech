@@ -10,29 +10,6 @@ const Calculator = ({setCalculator}) => {
     const [input, setInput] = useState('');
     const [minimize , setMinimize]=useState(true)
 
-    // Function to handle keyboard input
-    const handleKeyPress = (e) => {
-        if (e.key >= '0' && e.key <= '9') {
-            setInput((prevInput) => prevInput + e.key); // Append numbers
-        } else if (e.key === '+') {
-            setInput((prevInput) => prevInput + '+'); // Append +
-        } else if (e.key === '-') {
-            setInput((prevInput) => prevInput + '-'); // Append -
-        } else if (e.key === '*') {
-            setInput((prevInput) => prevInput + '*'); // Append *
-        } else if (e.key === '/') {
-            setInput((prevInput) => prevInput + '/'); // Append /
-        } else if (e.key === '.') {
-            setInput((prevInput) => prevInput + '.'); // Append .
-        } else if (e.key === 'Enter') {
-            handleEvaluate(); // Evaluate the expression when Enter is pressed
-        } else if (e.key === 'Backspace') {
-            setInput((prevInput) => prevInput.slice(0, -1)); // Remove last character
-        } else if (e.key === 'Escape') {
-            handleClear(); // Clear input when Escape is pressed
-        }
-    }
-
     // Evaluate the expression
     const handleEvaluate = () => {
         try {
@@ -54,12 +31,35 @@ const Calculator = ({setCalculator}) => {
 
     // Set up keyboard event listener
     useEffect(() => {
+        // Function to handle keyboard input
+        const handleKeyPress = (e) => {
+            if (e.key >= '0' && e.key <= '9') {
+                setInput((prevInput) => prevInput + e.key); // Append numbers
+            } else if (e.key === '+') {
+                setInput((prevInput) => prevInput + '+'); // Append +
+            } else if (e.key === '-') {
+                setInput((prevInput) => prevInput + '-'); // Append -
+            } else if (e.key === '*') {
+                setInput((prevInput) => prevInput + '*'); // Append *
+            } else if (e.key === '/') {
+                setInput((prevInput) => prevInput + '/'); // Append /
+            } else if (e.key === '.') {
+                setInput((prevInput) => prevInput + '.'); // Append .
+            } else if (e.key === 'Enter') {
+                handleEvaluate(); // Evaluate the expression when Enter is pressed
+            } else if (e.key === 'Backspace') {
+                setInput((prevInput) => prevInput.slice(0, -1)); // Remove last character
+            } else if (e.key === 'Escape') {
+                handleClear(); // Clear input when Escape is pressed
+            }
+        };
+
         window.addEventListener('keydown', handleKeyPress); // Add event listener
 
         return () => {
             window.removeEventListener('keydown', handleKeyPress); // Clean up event listener
         };
-    }, [handleKeyPress]);
+    }, [handleEvaluate, handleClear]);
 
     return (
         <div className={minimize === true ? styles.parentDiv : styles.parentMinimizeDiv}>

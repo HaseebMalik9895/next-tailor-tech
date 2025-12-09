@@ -1,8 +1,8 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import styles from './page.module.css';
-import Image from 'next/image';
-import { FaCamera } from 'react-icons/fa';
+"use client";
+import React, { useEffect, useState } from "react";
+import styles from "./page.module.css";
+import Image from "next/image";
+import { FaCamera } from "react-icons/fa";
 import { db } from "../../firebase/firebase";
 import { ref, push, set, get } from "firebase/database";
 
@@ -417,6 +417,9 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                         <textarea placeholder="Enter details here..." value={description} onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>
+              ))}
+            </div>
+          </div>
 
                 {/* Save Button */}
                 <div className={styles.SaveButtonDiv}>
@@ -443,7 +446,34 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                 )}
             </div>
         </div>
-    );
+
+        {/* Confirmation Modal */}
+        {modal && (
+          <div className={styles.congratulationMaindiv}>
+            <div className={styles.congratulationparentdiv}>
+              <div className={styles.congTextDiv}>
+                <h3>
+                  Are You Sure To {recordToEdit ? "Update" : "Save"} <br /> The
+                  Entry?
+                </h3>
+              </div>
+              <div className={styles.congButtonDiv}>
+                <button className={styles.CongButton} onClick={confirmSave}>
+                  {recordToEdit ? "Update" : "Save"}
+                </button>
+                <button
+                  className={styles.CongButton}
+                  onClick={() => setModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export { NewEntry };

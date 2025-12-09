@@ -28,6 +28,8 @@ const Main = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [recordToDelete, setRecordToDelete] = useState(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     const entriesRef = ref(db, "entries");
     const unsubscribe = onValue(entriesRef, (snapshot) => {

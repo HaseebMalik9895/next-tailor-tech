@@ -26,8 +26,8 @@ const Auth = () => {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, name, password);
-      router.replace("/dashboard"); // Use replace instead of push to prevent back navigation
-    } catch (err) {
+      router.push("/dashboard");
+    } catch {
       setError("Invalid login credentials!");
     }
   };
@@ -42,7 +42,7 @@ const Auth = () => {
       setName("");
       setPassword("");
       setPhone("");
-    } catch (err) {
+    } catch {
       setError("Registration failed. Try again.");
     }
   };
