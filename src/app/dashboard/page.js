@@ -8,8 +8,9 @@ import { NewEntry } from "../../components/NewEntry/page";
 import { Setting } from "../../components/Setting/page";
 import { db } from "../../firebase/firebase";
 import { ref, onValue, remove } from "firebase/database";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+
 
 const Main = () => {
   const [dashboardbutton, setDashboardbutton] = useState("Records");
@@ -19,7 +20,9 @@ const Main = () => {
   const [showNewEntry, setShowNewEntry] = useState(false);
   const [more, setMore] = useState(false);
   const [records, setRecords] = useState([]);
-  console.log(records, "recordsddd");
+  const [isNewOrder, setIsNewOrder] = useState(false);
+  const router = useRouter();
+
 
   // Modal state for delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -44,11 +47,60 @@ const Main = () => {
     return () => unsubscribe();
   }, []);
 
+  // Handle new order from customer profile
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const newOrderId = urlParams.get("newOrder");
+    
+    if (newOrderId) {
+      const record = records.find((r) => r.id === newOrderId);
+      if (record) {
+        setSelectedRecord(record);
+        setIsNewOrder(true);
+        setDashboardbutton("New entry");
+        setShowNewEntry(true);
+        // Clear URL parameter
+        window.history.replaceState({}, "", "/dashboard");
+      }
+    }
+  }, [records]);
+
+  // Prevent back navigation to login page
+  useEffect(() => {
+    const handlePopState = () => {
+      // Stay on dashboard, don't go back
+      window.history.pushState(null, "", window.location.href);
+    };
+
+    // Push initial state
+    window.history.pushState(null, "", window.location.href);
+    
+    // Listen for back button
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  // Filter records based on search and status
   const filteredRecords = records.filter(
     (record) =>
       record.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.code.includes(searchTerm)
   );
+
+  // Pending records for Records section
+  const pendingRecords = filteredRecords.filter((record) => {
+    const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+    return status === "Pending";
+  });
+
+  // Delivered records for History section
+  const deliveredRecords = filteredRecords.filter((record) => {
+    const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+    return status === "Delivered";
+  });
 
   const handleMeasurementClick = (record) => {
     setSelectedRecord(record);
@@ -135,6 +187,20 @@ const Main = () => {
             >
               <h3>New entry</h3>
             </button>
+             <button
+              className={
+                dashboardbutton === "History"
+                  ? styles.activebutton
+                  : styles.button
+              }
+              onClick={() => {
+                setDashboardbutton("History");
+                setMore(false);
+                setShowNewEntry(false);
+              }}
+            >
+              <h3>History</h3>
+            </button>
             <div style={{ position: "relative", width: "100%" }}>
               <button
                 className={more ? styles.activebutton : styles.button}
@@ -192,10 +258,15 @@ const Main = () => {
             </div>
 
             <div className={styles.recordlist}>
-              {filteredRecords.map((record) => {
-                const status = record.status || "Pending";
-                return (
-                  <div key={record.id} className={styles.listdiv}>
+              {pendingRecords.length === 0 ? (
+                <div style={{ padding: "20px", textAlign: "center", color: "#666" }}>
+                  <p>No pending records found</p>
+                </div>
+              ) : (
+                pendingRecords.map((record) => {
+                  const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+                  return (
+                    <div key={record.id} className={styles.listdiv}>
                     <div className={styles.leftlistdiv}>
                       <Image
                         src={record.image || "/person1.png"}
@@ -220,33 +291,33 @@ const Main = () => {
                         <h3>{record.customerName}</h3>
                       </div>
                       <div
-  onClick={() => router.push("/statusRecord")}
-  className={styles.statusdiv}
-  style={{
-    backgroundColor: status === "Pending" ? "#ffcdd2" : "#c8e6c9", // light red / light green
-    borderRadius: "5px",
-    padding: "2px 6px",
-    display: "inline-block",
-    minWidth: "60px",
-    textAlign: "center",
-  }}
->
-  <span
-    style={{
-      color: status === "Pending" ? "red" : "green", // text color
-      fontWeight: "bold",
-    }}
-  >
-    {status}
-  </span>
-</div>
-
+                        onClick={() => router.push("/statusRecord")}
+                        className={styles.statusdiv}
+                        style={{
+                          backgroundColor:
+                            status === "Pending" ? "#ffcdd2" : "#c8e6c9", // light red / light green
+                          borderRadius: "5px",
+                          padding: "2px 6px",
+                          display: "inline-block",
+                          minWidth: "60px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: status === "Pending" ? "red" : "green", // text color
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {status}
+                        </span>
+                      </div>
 
                       <div className={styles.receivediv}>
                         <span>{record.receivingDate}</span>
                       </div>
                       <div className={styles.deleverdiv}>
-                        <span>{record.deliveredDate}</span>
+                        <span>{record.deliveredDate || "-"}</span>
                       </div>
                     </div>
 
@@ -267,7 +338,8 @@ const Main = () => {
                     </div>
                   </div>
                 );
-              })}
+              })
+              )}
             </div>
 
             {showMeasurementCard && (
@@ -309,9 +381,105 @@ const Main = () => {
         {/* NEW ENTRY */}
         {dashboardbutton === "New entry" && showNewEntry && (
           <div className={styles.NewEntryDiv}>
-            <NewEntry recordToEdit={selectedRecord} />
+            <NewEntry 
+              recordToEdit={selectedRecord}
+              isNewOrder={isNewOrder}
+              onSaveSuccess={() => {
+                setDashboardbutton("Records");
+                setShowNewEntry(false);
+                setSelectedRecord(null);
+                setIsNewOrder(false);
+              }}
+            />
           </div>
         )}
+
+        {/* HISTORY */}
+        {dashboardbutton === "History" && (
+          <div className={styles.rightchilddiv}>
+            <div className={styles.searchdiv}>
+              <div className={styles.rightheaderinputdiv}>
+                <input
+                  className={styles.inputstyle}
+                  placeholder="Search history"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.recordlist}>
+              {deliveredRecords.length === 0 ? (
+                <div style={{ padding: "20px", textAlign: "center", color: "#666" }}>
+                  <p>No delivered records found</p>
+                </div>
+              ) : (
+                deliveredRecords.map((record) => {
+                  const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
+                  return (
+                    <div 
+                      key={record.id} 
+                      className={styles.listdiv}
+                      onClick={() => router.push(`/customer/${record.id}`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                    <div className={styles.leftlistdiv}>
+                      <Image
+                        src={record.image || "/person1.png"}
+                        layout="responsive"
+                        width={50}
+                        height={50}
+                        alt="person"
+                        style={{
+                          width: "50%",
+                          height: "auto",
+                          maxWidth: "40px",
+                          maxHeight: "40px",
+                        }}
+                      />
+                      <div className={styles.codediv}>
+                        <h7>{record.code}</h7>
+                      </div>
+                      <div className={styles.namediv}>
+                        <h3>{record.customerName}</h3>
+                      </div>
+                      <div
+                        className={styles.statusdiv}
+                        style={{
+                          backgroundColor:
+                            status === "Pending" ? "#ffcdd2" : "#c8e6c9",
+                          borderRadius: "5px",
+                          padding: "2px 6px",
+                          display: "inline-block",
+                          minWidth: "60px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: status === "Pending" ? "red" : "green",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {status}
+                        </span>
+                      </div>
+
+                      <div className={styles.receivediv}>
+                        <span>{record.receivingDate}</span>
+                      </div>
+                      <div className={styles.deleverdiv}>
+                        <span>{record.deliveredDate || "-"}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+              )}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

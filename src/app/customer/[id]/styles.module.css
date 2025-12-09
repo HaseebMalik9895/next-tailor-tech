@@ -1,0 +1,229 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #fb8500;
+}
+
+.backButton {
+  padding: 8px 16px;
+  background: linear-gradient(to right, #fb8500, #ffb703);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.backButton:hover {
+  opacity: 0.9;
+}
+
+.header h1 {
+  color: #023047;
+  margin: 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 20px;
+  color: #023047;
+}
+
+.profileSection {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.imageSection {
+  flex-shrink: 0;
+}
+
+.profileImage {
+  border-radius: 50%;
+  border: 4px solid #fb8500;
+  object-fit: cover;
+}
+
+.infoSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 10px;
+  font-size: 18px;
+}
+
+.label {
+  font-weight: 700;
+  color: #023047;
+  min-width: 100px;
+}
+
+.value {
+  color: #333;
+}
+
+.measurementsSection {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.measurementsSection h2 {
+  color: #023047;
+  margin-bottom: 20px;
+}
+
+.measurementsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.measurementItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  border-left: 3px solid #fb8500;
+}
+
+.measurementLabel {
+  font-weight: 600;
+  color: #023047;
+}
+
+.measurementValue {
+  color: #333;
+}
+
+.radiosSection {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 5px;
+}
+
+.radioItem {
+  display: flex;
+  gap: 10px;
+}
+
+.descriptionSection {
+  margin-top: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 5px;
+}
+
+.descriptionSection h3 {
+  color: #023047;
+  margin-bottom: 10px;
+}
+
+.descriptionSection p {
+  color: #333;
+  line-height: 1.6;
+}
+
+.orderHistorySection {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.orderHistorySection h2 {
+  color: #023047;
+  margin-bottom: 20px;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.historyItem {
+  padding: 15px;
+  background: white;
+  border-radius: 5px;
+  border-left: 3px solid #fb8500;
+}
+
+.historyInfo {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.historyInfo span {
+  color: #333;
+}
+
+.delivered {
+  color: green;
+  font-weight: 700;
+  padding: 4px 8px;
+  background: #c8e6c9;
+  border-radius: 4px;
+}
+
+.pending {
+  color: red;
+  font-weight: 700;
+  padding: 4px 8px;
+  background: #ffcdd2;
+  border-radius: 4px;
+}
+
+.actionSection {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.newOrderButton {
+  padding: 15px 40px;
+  background: linear-gradient(to right, #fb8500, #ffb703);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.newOrderButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(251, 133, 0, 0.3);
+}
