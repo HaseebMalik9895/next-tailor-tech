@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: row;
   background-color: aliceblue;
-  /* height: 100vh; */
+  height: 100vh;
+  overflow: hidden;
 }
 
 .leftdiv {
@@ -204,6 +205,10 @@
 
 .rightdiv {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
   /* background-color: blue; */
 }
 
@@ -219,6 +224,11 @@
 
 .rightchilddiv {
   width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 8vh);
+  overflow: hidden;
 }
 
 .searchdiv {
@@ -336,12 +346,17 @@
   /* background-color: #ba51ba ; */
   flex: 1;
   /* Make it flexible */
-  height: 630px;
-  /* Set a fixed height */
+  height: calc(100vh - 160px);
+  /* Dynamic height based on viewport */
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
   /* Enable vertical scrolling */
   overflow-x: visible;
   /* Allow menu to overflow horizontally */
+  background-color: aliceblue;
+  /* Ensure background color is set */
+  padding: 0;
+  margin: 0;
 }
 
 .listdiv {
@@ -568,6 +583,7 @@
   .perentdiv {
     flex-direction: column;
     height: 100vh;
+    overflow: hidden;
   }
 
   .leftdiv {
@@ -671,6 +687,9 @@
   .rightdiv {
     width: 100%;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .rightheader {
@@ -722,7 +741,11 @@
 
   .recordlist {
     height: calc(100vh - 200px);
+    max-height: calc(100vh - 200px);
     padding: 5px;
+    background-color: aliceblue;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .listdiv {
@@ -794,6 +817,15 @@
     right: 10px;
     top: 40px;
     min-width: 100px;
+  }
+
+  .rightchilddiv {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 120px);
+    overflow: hidden;
   }
 
   .NewEntryDiv {

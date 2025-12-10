@@ -114,7 +114,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
             newErrors.customerName = 'Customer Name is required';
         }
         if (!deliveredDate.trim()) {
-            newErrors.customerName = 'deliveredDate is required';
+            newErrors.deliveredDate = 'Delivered Date is required';
         }
         if (!phone.trim()) {
             newErrors.phone = 'Phone Number is required';
@@ -292,7 +292,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
             value={deliveredDate}
             onChange={(e) => setDeliveredDate(e.target.value)}
           />
-           {errors.customerName && <span className={styles.errorText}>{errors.customerName}</span>}
+           {errors.deliveredDate && <span className={styles.errorText}>{errors.deliveredDate}</span>}
           {/* Delivered Status Dropdown */}
           <div
             style={{
