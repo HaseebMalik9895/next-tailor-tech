@@ -1,9 +1,14 @@
 .container {
   padding: 20px;
-  max-width: 1200px;
   margin: 0 auto;
-  background: white;
-  min-height: 100vh;
+  background: linear-gradient(to bottom, #fb8500, #ffb703);
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
 }
 
 .header {
@@ -15,6 +20,20 @@
   border-bottom: 2px solid #fb8500;
 }
 
+@media (max-width: 768px) {
+  .header {
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    
+  }
+  
+  .header h1 {
+    font-size: 1.5rem;
+    
+  }
+}
+
 .backButton {
   padding: 8px 16px;
   background: linear-gradient(to right, #fb8500, #ffb703);
@@ -24,6 +43,14 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .backButton {
+    padding: 10px 20px;
+    font-size: 14px;
+    min-height: 44px; /* Better touch target */
+  }
 }
 
 .backButton:hover {
@@ -53,6 +80,16 @@
   border-radius: 10px;
 }
 
+@media (max-width: 768px) {
+  .profileSection {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    text-align: center;
+  }
+}
+
 .imageSection {
   flex-shrink: 0;
 }
@@ -61,6 +98,13 @@
   border-radius: 50%;
   border: 4px solid #fb8500;
   object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .profileImage {
+    width: 120px !important;
+    height: 120px !important;
+  }
 }
 
 .infoSection {
@@ -74,6 +118,15 @@
   display: flex;
   gap: 10px;
   font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .infoRow {
+    font-size: 16px;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-start;
+  }
 }
 
 .label {
@@ -93,6 +146,13 @@
   border-radius: 10px;
 }
 
+@media (max-width: 768px) {
+  .measurementsSection {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+}
+
 .measurementsSection h2 {
   color: #023047;
   margin-bottom: 20px;
@@ -105,6 +165,13 @@
   margin-bottom: 20px;
 }
 
+@media (max-width: 768px) {
+  .measurementsGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
 .measurementItem {
   display: flex;
   justify-content: space-between;
@@ -112,6 +179,13 @@
   background: white;
   border-radius: 5px;
   border-left: 3px solid #fb8500;
+}
+
+@media (max-width: 768px) {
+  .measurementItem {
+    padding: 12px;
+    font-size: 14px;
+  }
 }
 
 .measurementLabel {
@@ -132,9 +206,24 @@
   border-radius: 5px;
 }
 
+@media (max-width: 768px) {
+  .radiosSection {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
+
 .radioItem {
   display: flex;
   gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .radioItem {
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .descriptionSection {
@@ -161,6 +250,13 @@
   border-radius: 10px;
 }
 
+@media (max-width: 768px) {
+  .orderHistorySection {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+}
+
 .orderHistorySection h2 {
   color: #023047;
   margin-bottom: 20px;
@@ -179,10 +275,24 @@
   border-left: 3px solid #fb8500;
 }
 
+@media (max-width: 768px) {
+  .historyItem {
+    padding: 12px;
+  }
+}
+
 .historyInfo {
   display: flex;
   gap: 20px;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .historyInfo {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
 }
 
 .historyInfo span {
@@ -213,8 +323,8 @@
 
 .newOrderButton {
   padding: 15px 40px;
-  background: linear-gradient(to right, #fb8500, #ffb703);
-  color: white;
+  background: linear-gradient(to left, #fb8500, #ffb703);
+  color: #023047;
   border: none;
   border-radius: 8px;
   font-size: 18px;
@@ -223,7 +333,90 @@
   transition: all 0.3s;
 }
 
+@media (max-width: 768px) {
+  .newOrderButton {
+    padding: 12px 30px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
 .newOrderButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(251, 133, 0, 0.3);
+}
+
+/* Additional mobile styles for smaller screens */
+@media (max-width: 480px) {
+  .container {
+    padding: 8px;
+  }
+  
+  .header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .profileSection {
+    padding: 10px;
+  }
+  
+  .profileImage {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  
+  .infoRow {
+    font-size: 14px;
+  }
+  
+  .measurementsSection,
+  .orderHistorySection {
+    padding: 10px;
+  }
+  
+  .measurementsSection h2,
+  .orderHistorySection h2 {
+    font-size: 1.2rem;
+  }
+  
+  .measurementItem {
+    padding: 8px;
+    font-size: 13px;
+  }
+  
+  .historyItem {
+    padding: 10px;
+  }
+  
+  .historyInfo span {
+    font-size: 13px;
+  }
+  
+  .newOrderButton {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .backButton {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Ensure proper spacing and overflow handling */
+@media (max-width: 768px) {
+  .measurementLabel,
+  .measurementValue {
+    word-break: break-word;
+  }
+  
+  .value {
+    word-break: break-word;
+  }
+  
+  .descriptionSection p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
 }

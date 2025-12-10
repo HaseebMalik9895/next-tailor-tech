@@ -67,19 +67,31 @@
 /* Input fields and text */
 .inputdiv,
 .signupinputdiv {
-    
     height: 50vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .inputdiv p,
-.signupinputdiv p,
+.signupinputdiv p {
+    background-color: #023047;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 10px;
+    align-self: flex-start;
+    width: 100%;
+}
+
 .logintext {
     background-color: #023047;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-top: 10px;
+    align-self: flex-start;
 }
 
 .nameinput {
@@ -100,6 +112,38 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     outline: none;
 }
+
+/* Password container */
+.passwordContainer {
+    position: relative;
+    display: inline-block;
+    width: 92%;
+}
+
+.passwordContainer .nameinput {
+    width: 100%;
+    padding-right: 45px;
+    box-sizing: border-box;
+}
+
+.eyeButton {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #023047;
+    font-size: 16px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+
 
 /* Button styles */
 .buttondiv {
@@ -213,16 +257,45 @@
         display: flex;
         width: 80%;
         flex-direction: column;
+        align-items: center;
     }
 
     .signupinputdiv {
-
         width: 80%;
-
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .nameinput {
         width: 100%;
+    }
+
+    .passwordContainer {
+        width: 100%;
+        position: relative;
+    }
+
+    .passwordContainer .nameinput {
+        width: 100%;
+        padding-right: 45px;
+        box-sizing: border-box;
+    }
+
+    .eyeButton {
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        position: absolute;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #023047;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .loginButton {

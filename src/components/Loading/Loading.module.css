@@ -1,0 +1,103 @@
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.loadingContainer > div,
+.loadingContainer svg,
+.loadingContainer canvas {
+  background: transparent !important;
+}
+
+.loadingContainer svg {
+  background-color: transparent !important;
+}
+
+.loadingText {
+  color: #023047;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+/* Full screen loading overlay */
+.fullScreenLoading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, #fb8500, #ffb703);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.loaderContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.lottieContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.lottieContainer > div,
+.lottieContainer svg,
+.lottieContainer canvas {
+  background: transparent !important;
+}
+
+.lottieContainer svg {
+  background-color: transparent !important;
+}
+
+.title {
+  color: #023047;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  color: #023047;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.8;
+}
+
+
+
+/* Fallback loader */
+.fallbackLoader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #023047;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

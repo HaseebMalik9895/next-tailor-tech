@@ -3,6 +3,8 @@ import { useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Loading from "../../components/Loading/Loading";
 
 // Firebase
 import { auth } from "../../firebase/firebase"; // <-- adjust path based on your file location
@@ -17,6 +19,10 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
+  const [isSignupLoading, setIsSignupLoading] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
 
   const router = useRouter();
 
@@ -24,16 +30,22 @@ const Auth = () => {
 
   // 🔐 Login Function
   const handleLogin = async () => {
+    setIsLoginLoading(true);
+    setError("");
     try {
       await signInWithEmailAndPassword(auth, name, password);
       router.push("/dashboard");
     } catch {
-      setError("Invalid login credentials!");
+      setError("Please enter Email and Password");
+    } finally {
+      setIsLoginLoading(false);
     }
   };
 
   // 📝 Signup Function
   const handleSignup = async () => {
+    setIsSignupLoading(true);
+    setError("");
     try {
       await createUserWithEmailAndPassword(auth, name, password);
       alert("Signup Successful!");
@@ -44,8 +56,31 @@ const Auth = () => {
       setPhone("");
     } catch {
       setError("Registration failed. Try again.");
+    } finally {
+      setIsSignupLoading(false);
     }
   };
+
+  // Show full screen loading during login/signup
+  if (isLoginLoading) {
+    return (
+      <Loading 
+        fullScreen={true} 
+        title="Logging In..." 
+        subtitle="Please wait while we authenticate you"
+      />
+    );
+  }
+
+  if (isSignupLoading) {
+    return (
+      <Loading 
+        fullScreen={true} 
+        title="Creating Account..." 
+        subtitle="Setting up your Tailor Tech account"
+      />
+    );
+  }
 
   return (
     <div
@@ -71,7 +106,7 @@ const Auth = () => {
         {/* Login Form */}
         {!isSignupVisible && (
           <div className={styles.loginDiv}>
-            <h1 className={styles.logintext}>Login</h1>
+            <h1 className={styles.logintext} style={{alignSelf:'center'}}>Login</h1>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <div className={styles.inputdiv}>
               <p>Email</p>
@@ -82,16 +117,29 @@ const Auth = () => {
                 onChange={(e) => setName(e.target.value)}
               />
               <p>Password</p>
-              <input
-                className={styles.nameinput}
-                placeholder="Enter your password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className={styles.passwordContainer}>
+                <input
+                  className={styles.nameinput}
+                  placeholder="Enter your password"
+                  type={showLoginPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className={styles.eyeButton}
+                  onClick={() => setShowLoginPassword(!showLoginPassword)}
+                >
+                  {showLoginPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </div>
             <div className={styles.buttondiv}>
-              <button className={styles.loginButton} onClick={handleLogin}>
+              <button 
+                className={styles.loginButton} 
+                onClick={handleLogin}
+                disabled={isLoginLoading}
+              >
                 Login
               </button>
               <span className={styles.text} onClick={toggleForm}>
@@ -104,7 +152,7 @@ const Auth = () => {
         {/* Signup Form */}
         {isSignupVisible && (
           <div className={styles.signUpDiv}>
-            <h1 className={styles.logintext}>Signup</h1>
+            <h1 className={styles.logintext} style={{alignSelf:'center'}}>Signup</h1>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <div className={styles.signupinputdiv}>
               <p>Email</p>
@@ -115,13 +163,22 @@ const Auth = () => {
                 onChange={(e) => setName(e.target.value)}
               />
               <p>Password</p>
-              <input
-                className={styles.nameinput}
-                placeholder="Enter your password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className={styles.passwordContainer}>
+                <input
+                  className={styles.nameinput}
+                  placeholder="Enter your password"
+                  type={showSignupPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className={styles.eyeButton}
+                  onClick={() => setShowSignupPassword(!showSignupPassword)}
+                >
+                  {showSignupPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
               <p>Phone number</p>
               <input
                 className={styles.nameinput}
@@ -130,7 +187,11 @@ const Auth = () => {
                 onChange={(e) => setPhone(e.target.value)}
               />
             </div>
-            <button className={styles.signupButton} onClick={handleSignup}>
+            <button 
+              className={styles.signupButton} 
+              onClick={handleSignup}
+              disabled={isSignupLoading}
+            >
               Signup
             </button>
             <span className={styles.text} onClick={toggleForm}>

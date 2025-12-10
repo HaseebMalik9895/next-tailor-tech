@@ -49,9 +49,9 @@ const CustomerProfile = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <button className={styles.backButton} onClick={() => router.back()}>
-          ← Back
+          Back
         </button>
-        <h1>Customer Profile</h1>
+        <h1 style={{color:'white'}}>Customer Profile</h1>
       </div>
 
       <div className={styles.profileSection}>
@@ -122,10 +122,11 @@ const CustomerProfile = () => {
             {orderHistory.map((order) => (
               <div key={order.id} className={styles.historyItem}>
                 <div className={styles.historyInfo}>
-                  <span>Receiving Date: {order.receivingDate}</span>
-                  <span>Delivered Date: {order.deliveredDate || "Pending"}</span>
+                  <span><strong>Receiving Date:</strong> {order.receivingDate}</span>
+                  <span><strong>Delivered Date:</strong> {order.deliveredDate || "Pending"}</span>
+                  <span><strong>No of suits:</strong> {order.numberOfSuits || "Pending"}</span>
                   <span className={order.status === "Delivered" ? styles.delivered : styles.pending}>
-                    {order.status || "Pending"}
+                    <strong>Status:</strong> {order.status || "Pending"}
                   </span>
                 </div>
               </div>

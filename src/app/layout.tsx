@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 // import localFont from "next/font/local";
 import "./globals.css";
+import Loading from "../components/Loading/Loading";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        {children}
+        <Loading fullScreen={true}>
+          {children}
+        </Loading>
       </body>
     </html>
   );

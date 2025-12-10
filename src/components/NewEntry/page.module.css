@@ -122,16 +122,20 @@
 
 .griditem {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: center;
+    /* justify-content: center; */
     flex-direction: row;
     padding-left: 10px;
-    min-width: 0;
+    /* min-width: 0; */
+    /* background-color: aqua; */
 }
 
 .griditem > div {
-    width: 60%;
-    min-width: 0;
+    /* width: 70%; */
+    /* min-width: 0; */
+    /* background-color: red; */
+    justify-content: center;
+    align-items: center;
 }
 
 .label {
@@ -175,7 +179,8 @@
 .Inputs {
     font-size: 24px;
     font-weight: 600;
-    width: 100%;
+    width: 80%;
+    text-align: center;
 }
 
 /* Hide number input arrows */
@@ -278,7 +283,7 @@
     font-size: 12px;
     font-weight: 600;
     display: block;
-    margin-top: 4px;
+    margin-top: 10px;
 }
 
 /* Custom Radio Buttons */
@@ -366,7 +371,7 @@
     height: 40%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:space-evenly;
 }
 
 .CongButton {
@@ -375,7 +380,19 @@
     width: 40%;
     border: none;
     border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.CongButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
@@ -500,7 +517,7 @@
     }
 
     .Inputs {
-        width: 100%;
+        width: 90%;
         height: 45px;
         font-size: 18px;
         padding: 10px;
@@ -523,8 +540,9 @@
     }
 
     .HimInput {
-        width: 100%;
+        width: 40%;
         margin-top: 8px;
+        /* background-color: aqua; */
     }
 
     .HimInput label {
@@ -591,16 +609,18 @@
 
     .congTextDiv h3 {
         font-size: 18px;
-        text-align: center;
+        /* text-align: center; */
     }
 
     .congButtonDiv {
-        height: auto;
+        /* height: auto; */
         padding: 15px;
+        justify-content: space-evenly;
+        /* background-color: aqua; */
     }
 
     .CongButton {
-        width: 80%;
+        width: 30%;
         height: 45px;
         font-size: 16px;
         color: white;

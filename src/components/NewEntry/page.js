@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { FaCamera } from 'react-icons/fa';
 import { db } from "../../firebase/firebase";
 import { ref, push, set, get } from "firebase/database";
+import Loading from "../Loading/Loading";
 
 const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -22,6 +23,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [numberOfSuits, setNumberOfSuits] = useState('');
     const [errors, setErrors] = useState({});
+    const [isSaving, setIsSaving] = useState(false);
 
     const options = ['Pending', 'Delivered'];
 
@@ -160,6 +162,8 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     };
 
   const confirmSave = async () => {
+    setIsSaving(true);
+    setModal(false); // Close modal first
     try {
       const entryData = {
         customerName,
@@ -186,7 +190,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
         await set(newEntryRef, entryData);
       }
 
-      setModal(false);
+
 
       // Reset form and generate next code
       setCustomerName("");
@@ -218,8 +222,21 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
       }
     } catch (err) {
       alert("Error saving entry: " + err.message);
+    } finally {
+      setIsSaving(false);
     }
   };
+
+  // Show full screen loading during save
+  if (isSaving) {
+    return (
+      <Loading 
+        fullScreen={true} 
+        title={recordToEdit && !isNewOrder ? "Updating Entry..." : "Saving Entry..."} 
+        subtitle="Please wait while we save your data"
+      />
+    );
+  }
 
   return (
     <div className={styles.ParentDiv}>
@@ -370,12 +387,21 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
           <div className={styles.PHDiv}>
             <p>Phone Number</p>
             <input
-              type="search"
-              className={styles.nameinput}
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+  className={styles.nameinput}
+  placeholder="Phone Number"
+  value={phone}
+  type="tel"
+  maxLength={11}
+  onChange={(e) => {
+    const value = e.target.value;
+
+    // Sirf digits allow
+    if (/^[0-9]*$/.test(value)) {
+      setPhone(value);
+    }
+  }}
+/>
+
             {errors.phone && <span className={styles.errorText}>{errors.phone}</span>}
           </div>
           <div className={styles.CodeDiv}>
@@ -400,7 +426,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
             {inputNames.map((name, idx) => (
               <div key={idx} className={styles.griditem}>
                 <label className={styles.label}>{name}:</label>
-                <div style={{ width: '60%' }}>
+                <div >
                   <input
                     type="number"
                     step="0.1"
@@ -480,7 +506,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                     {/* Description */}
                     <div className={styles.DetailInputDiv}>
                         <h3>Description </h3>
-                        <div style={{ width: '80%' }}>
+                        <div style={{ width: '80%' ,paddingLeft:'10px'}}>
                           <textarea placeholder="Enter details here..." value={description} onChange={(e) => setDescription(e.target.value)} />
                           {errors.description && <span className={styles.errorText}>{errors.description}</span>}
                         </div>
@@ -502,10 +528,20 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                                 <h3>Are You Sure To {recordToEdit && !isNewOrder ? "Update" : "Save"} <br /> The Entry?</h3>
                             </div>
                             <div className={styles.congButtonDiv}>
-                                <button className={styles.CongButton} onClick={confirmSave}>
+                                <button 
+                                  className={styles.CongButton} 
+                                  onClick={confirmSave}
+                                  disabled={isSaving}
+                                >
                                   {recordToEdit && !isNewOrder ? "Update" : "Save"}
                                 </button>
-                                <button className={styles.CongButton} onClick={() => setModal(false)}>Cancel</button>
+                                <button 
+                                  className={styles.CongButton} 
+                                  onClick={() => setModal(false)}
+                                  disabled={isSaving}
+                                >
+                                  Cancel
+                                </button>
                             </div>
                         </div>
                     </div>
