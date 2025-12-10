@@ -291,7 +291,7 @@ const Main = () => {
                         <h3>{record.customerName}</h3>
                       </div>
                       <div
-                        onClick={() => router.push("/statusRecord")}
+                        // onClick={() => router.push("/statusRecord")}
                         className={styles.statusdiv}
                         style={{
                           backgroundColor:
