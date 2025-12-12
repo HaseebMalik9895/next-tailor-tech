@@ -16,27 +16,90 @@ const MeasurementCard = ({ record, closeMeasurementCard }) => {
     description,
     measurements = {},
     radios = {},
+    garmentType = 'Suit'
   } = record;
 
   const status = record.status || (deliveredDate ? "Delivered" : "Pending");
 
-  // Map of keys to labels (English + Urdu)
-  const measurementLabels = {
-    Length: "Length / لمبائی",
-    Chest: "Chest / چھاتی",
-    Waist: "Waist / کمر",
-    Shoulder: "Shoulder / کندھا",
-    Arm: "Arm / بازو",
-    Neck: "Neck / گلہ",
-    Hem: "Hem / گھیرا",
-    "Trouser Length": "Trouser Length / شلوار لمبائی",
-    "Trouser Cuff": "Trouser Cuff / پانچہ",
-    "Trouser Hem": "Trouser Hem / شلوار گھیرا",
-    "Side Pocket": "Side Pocket / سائیڈ پاکٹ",
-    "Front Pocket": "Front Pocket / فرنٹ پاکٹ",
-    "Trouser Pocket": "Trouser Pocket / شلوار پاکٹ",
-    "Cuff length": "Cuff length / کف لمبائی",
+  // Different measurement inputs for different garment types with Urdu translations
+  const measurementInputs = {
+    Suit: [
+      'Length', 'Chest', 'Waist', 'Shoulder', 'Arm',
+      'Neck', 'Hem', 'Trouser Length', 'Trouser Cuff',
+      'Trouser Hem', 'Side Pocket', 'Front Pocket',
+      'Trouser Pocket', 'Cuff length'
+    ],
+    Coat: [
+      'Coat Length', 'Chest', 'Waist', 'Shoulder', 'Arm Length',
+      'Neck', 'Coat Bottom', 'Sleeve Opening', 'Back Width',
+      'Front Width', 'Collar Size', 'Lapel Width'
+    ],
+    Shirt: [
+      'Shirt Length', 'Chest', 'Waist', 'Shoulder', 'Arm Length',
+      'Neck', 'Cuff', 'Sleeve Length', 'Back Length',
+      'Front Length', 'Collar Band', 'Yoke'
+    ],
+    Trouser: [
+      'Trouser Length', 'Waist', 'Hip', 'Thigh', 'Knee',
+      'Bottom', 'Crotch', 'Rise', 'Inseam', 'Outseam',
+      'Pocket Depth', 'Belt Loop'
+    ]
   };
+
+  // Complete map of keys to labels (English + Urdu)
+  const measurementLabels = {
+    // General measurements
+    'Length': "Length / لمبائی",
+    'Chest': "Chest / چھاتی",
+    'Waist': "Waist / کمر",
+    'Shoulder': "Shoulder / کندھا",
+    'Arm': "Arm / بازو",
+    'Neck': "Neck / گلہ",
+    'Hem': "Hem / گھیرا",
+    
+    // Suit specific
+    'Trouser Length': "Trouser Length / شلوار لمبائی",
+    'Trouser Cuff': "Trouser Cuff / پانچہ",
+    'Trouser Hem': "Trouser Hem / شلوار گھیرا",
+    'Side Pocket': "Side Pocket / سائیڈ پاکٹ",
+    'Front Pocket': "Front Pocket / فرنٹ پاکٹ",
+    'Trouser Pocket': "Trouser Pocket / شلوار پاکٹ",
+    'Cuff length': "Cuff length / کف لمبائی",
+    
+    // Coat specific
+    'Coat Length': "Coat Length / کوٹ لمبائی",
+    'Arm Length': "Arm Length / بازو لمبائی",
+    'Coat Bottom': "Coat Bottom / کوٹ نیچے",
+    'Sleeve Opening': "Sleeve Opening / آستین کھلنا",
+    'Back Width': "Back Width / پیٹھ چوڑائی",
+    'Front Width': "Front Width / سامنے چوڑائی",
+    'Collar Size': "Collar Size / کالر سائز",
+    'Lapel Width': "Lapel Width / لیپل چوڑائی",
+    
+    // Shirt specific
+    'Shirt Length': "Shirt Length / قمیض لمبائی",
+    'Cuff': "Cuff / کف",
+    'Sleeve Length': "Sleeve Length / آستین لمبائی",
+    'Back Length': "Back Length / پیٹھ لمبائی",
+    'Front Length': "Front Length / سامنے لمبائی",
+    'Collar Band': "Collar Band / کالر بینڈ",
+    'Yoke': "Yoke / یوک",
+    
+    // Trouser specific
+    'Hip': "Hip / کولہے",
+    'Thigh': "Thigh / ران",
+    'Knee': "Knee / گھٹنا",
+    'Bottom': "Bottom / نیچے",
+    'Crotch': "Crotch / کروچ",
+    'Rise': "Rise / اٹھنا",
+    'Inseam': "Inseam / اندرونی سیم",
+    'Outseam': "Outseam / بیرونی سیم",
+    'Pocket Depth': "Pocket Depth / پاکٹ گہرائی",
+    'Belt Loop': "Belt Loop / بیلٹ لوپ"
+  };
+
+  // Get measurements for current garment type
+  const currentMeasurements = measurementInputs[garmentType] || measurementInputs.Suit;
 
   const radioLabels = {
     hem: "Hem / گھیرا",
@@ -79,6 +142,7 @@ const MeasurementCard = ({ record, closeMeasurementCard }) => {
           <div className={styles.InfoDiv}>
             <h1>{customerName}</h1>
             <p>Code: {code}</p>
+            <p>Garment Type: {garmentType}</p>
             <p>Status: {status}</p>
             <p>Receive Date: {receivingDate}</p>
             <p>Delivery Date: {deliveredDate}</p>
@@ -87,8 +151,8 @@ const MeasurementCard = ({ record, closeMeasurementCard }) => {
           {/* Measurements */}
           <div className={styles.DetailParentDiv}>
             <div className={styles.DetailDiv}>
-              {Object.keys(measurementLabels).map((key, idx) => (
-                <p key={idx}>{measurementLabels[key]}</p>
+              {currentMeasurements.map((key, idx) => (
+                <p key={idx}>{measurementLabels[key] || key}</p>
               ))}
               {Object.keys(radioLabels).map((key, idx) => (
                 <p key={idx}>{radioLabels[key]}</p>
@@ -96,7 +160,7 @@ const MeasurementCard = ({ record, closeMeasurementCard }) => {
             </div>
 
             <div className={styles.DetailDiv}>
-              {Object.keys(measurementLabels).map((key, idx) => (
+              {currentMeasurements.map((key, idx) => (
                 <p key={idx}>{measurements[key] || "-"}</p>
               ))}
               {Object.keys(radioLabels).map((key, idx) => (

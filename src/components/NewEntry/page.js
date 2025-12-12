@@ -2,7 +2,23 @@
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
-import { FaCamera } from 'react-icons/fa';
+import { 
+    FaCamera, 
+    FaRulerVertical, 
+    FaExpand, 
+    FaArrowsAltH, 
+    FaArrowsAltV,
+    FaHandPaper,
+    FaCircle,
+    FaTshirt,
+    FaVest,
+    FaCut,
+    FaRegSquare,
+    FaArrowUp,
+    FaArrowDown,
+    FaArrowLeft,
+    FaArrowRight
+} from 'react-icons/fa';
 import { db } from "../../firebase/firebase";
 import { ref, push, set, get } from "firebase/database";
 import Loading from "../Loading/Loading";
@@ -24,15 +40,94 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     const [numberOfSuits, setNumberOfSuits] = useState('');
     const [errors, setErrors] = useState({});
     const [isSaving, setIsSaving] = useState(false);
+    const [garmentType, setGarmentType] = useState('Suit');
+    const [showGarmentDropdown, setShowGarmentDropdown] = useState(false);
 
     const options = ['Pending', 'Delivered'];
+    const garmentOptions = ['Suit', 'Coat', 'Shirt', 'Trouser'];
 
-    const inputNames = [
-        'Length', 'Chest', 'Waist', 'Shoulder', 'Arm',
-        'Neck', 'Hem', 'Trouser Length', 'Trouser Cuff',
-        'Trouser Hem', 'Side Pocket', 'Front Pocket',
-        'Trouser Pocket', 'Cuff length'
-    ];
+    // Different measurement inputs for different garment types
+    const measurementInputs = {
+        Suit: [
+            'Length', 'Chest', 'Waist', 'Shoulder', 'Arm',
+            'Neck', 'Hem', 'Trouser Length', 'Trouser Cuff',
+            'Trouser Hem', 'Side Pocket', 'Front Pocket',
+            'Trouser Pocket', 'Cuff length'
+        ],
+        Coat: [
+            'Coat Length', 'Chest', 'Waist', 'Shoulder', 'Arm Length',
+            'Neck', 'Coat Bottom', 'Sleeve Opening', 'Back Width',
+            'Front Width', 'Collar Size', 'Lapel Width'
+        ],
+        Shirt: [
+            'Shirt Length', 'Chest', 'Waist', 'Shoulder', 'Arm Length',
+            'Neck', 'Cuff', 'Sleeve Length', 'Back Length',
+            'Front Length', 'Collar Band', 'Yoke'
+        ],
+        Trouser: [
+            'Trouser Length', 'Waist', 'Hip', 'Thigh', 'Knee',
+            'Bottom', 'Crotch', 'Rise', 'Inseam', 'Outseam',
+            'Pocket Depth', 'Belt Loop'
+        ]
+    };
+
+    const inputNames = measurementInputs[garmentType];
+
+    // Function to get icon for measurement type
+    const getMeasurementIcon = (measurementName) => {
+        const iconMap = {
+            // General measurements
+            'Length': <FaRulerVertical />,
+            'Chest': <FaExpand />,
+            'Waist': <FaArrowsAltH />,
+            'Shoulder': <FaArrowsAltH />,
+            'Arm': <FaArrowsAltV />,
+            'Neck': <FaCircle />,
+            'Hem': <FaArrowsAltH />,
+            
+            // Suit specific
+            'Trouser Length': <FaRulerVertical />,
+            'Trouser Cuff': <FaArrowsAltH />,
+            'Trouser Hem': <FaArrowsAltH />,
+            'Side Pocket': <FaRegSquare />,
+            'Front Pocket': <FaRegSquare />,
+            'Trouser Pocket': <FaRegSquare />,
+            'Cuff length': <FaArrowsAltH />,
+            
+            // Coat specific
+            'Coat Length': <FaRulerVertical />,
+            'Arm Length': <FaArrowsAltV />,
+            'Coat Bottom': <FaArrowsAltH />,
+            'Sleeve Opening': <FaCircle />,
+            'Back Width': <FaArrowsAltH />,
+            'Front Width': <FaArrowsAltH />,
+            'Collar Size': <FaCircle />,
+            'Lapel Width': <FaArrowsAltH />,
+            
+            // Shirt specific
+            'Shirt Length': <FaRulerVertical />,
+            'Cuff': <FaArrowsAltH />,
+            'Sleeve Length': <FaArrowsAltV />,
+            'Back Length': <FaRulerVertical />,
+            'Front Length': <FaRulerVertical />,
+            'Collar Band': <FaArrowsAltH />,
+            'Yoke': <FaArrowsAltH />,
+            
+            // Trouser specific
+            'Hip': <FaArrowsAltH />,
+            'Thigh': <FaArrowsAltH />,
+            'Knee': <FaArrowsAltH />,
+            'Bottom': <FaArrowsAltH />,
+            'Crotch': <FaRulerVertical />,
+            'Rise': <FaRulerVertical />,
+            'Inseam': <FaRulerVertical />,
+            'Outseam': <FaRulerVertical />,
+            'Pocket Depth': <FaArrowDown />,
+            'Belt Loop': <FaCircle />
+        };
+        
+        return iconMap[measurementName] || <FaRulerVertical />;
+    };
 
     useEffect(() => {
         const today = new Date();
@@ -52,6 +147,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                 setDeliveredDate(''); // Reset delivered date
                 setStatus('Pending'); // Reset to pending
                 setNumberOfSuits('');
+                setGarmentType(recordToEdit.garmentType || 'Suit');
             } else {
                 // Edit existing: prefill all fields
                 setCustomerName(recordToEdit.customerName || '');
@@ -65,6 +161,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                 setSelectedImage(recordToEdit.image || null);
                 setStatus(recordToEdit.status || 'Pending');
                 setNumberOfSuits(recordToEdit.numberOfSuits || '');
+                setGarmentType(recordToEdit.garmentType || 'Suit');
             }
         } else {
             // Auto-generate code for new entry
@@ -104,6 +201,13 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     const handleSelect = (option) => {
         setStatus(option);
         setShowDropdown(false);
+    };
+
+    const handleGarmentSelect = (garment) => {
+        setGarmentType(garment);
+        setShowGarmentDropdown(false);
+        // Clear measurements when changing garment type
+        setMeasurements({});
     };
 
     const validateForm = () => {
@@ -176,6 +280,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
         deliveredDate,
         status,
         numberOfSuits,
+        garmentType,
         image: selectedImage || null,
       };
 
@@ -242,15 +347,18 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
     <div className={styles.ParentDiv}>
       {/* Top Section: Dates + Image */}
       <div className={styles.TopDiv}>
-        <div>
-          <label className={styles.label}>Receiving Date: </label>
-          <input
-            type="date"
-            className={styles.DateInputs}
-            value={currentDate}
-            onChange={(e) => setCurrentDate(e.target.value)}
-          />
-          <div>
+        <div >
+          <div style={{flexDirection:'row',display:'flex'}}>
+            <label className={styles.label}>Receiving Date: </label>
+            <input
+              type="date"
+              className={styles.DateInputs}
+              value={currentDate}
+              onChange={(e) => setCurrentDate(e.target.value)}
+            />
+            {errors.currentDate && <span className={styles.errorText}>{errors.currentDate}</span>}
+          </div>
+          <div style={{display:'flex'}}>
             <label className={styles.label}>No. of Suits: </label>
             <input
               // type="number"
@@ -284,7 +392,8 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
           </label>
         </div>
 
-        <div>
+        <div style={{width:'25%'}}>
+          <div style={{flexDirection:'row',display:'flex'}}>
           <label className={styles.label}>Delivered Date: </label>
           <input
             type="date"
@@ -293,80 +402,33 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
             onChange={(e) => setDeliveredDate(e.target.value)}
           />
            {errors.deliveredDate && <span className={styles.errorText}>{errors.deliveredDate}</span>}
+           </div>
           {/* Delivered Status Dropdown */}
-          <div
-            style={{
-              marginTop: "10px",
-              position: "relative",
-              width: "350px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            <label
-              style={{ color: "black", fontWeight: "600", fontSize: "14px" }}
-            >
-              Delivered Status:
-            </label>
-            <input
-              type="text"
-              value={status}
-              readOnly
-              onClick={() => setShowDropdown(!showDropdown)}
-              placeholder="Select status"
-              style={{
-                background: "linear-gradient(to bottom, #fb8500, #ffb703)",
-                padding: "8px",
-                cursor: "pointer",
-                width: "150px",
-                border: "none",
-                borderRadius: "5px",
-                fontSize: "18px",
-                color: "white",
-              }}
-            />
-            {showDropdown && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "100%",
-                  left: "125px",
-                  width: "150px",
-                  zIndex: 1000,
-                  color: "black",
-                  border: "none",
-                }}
-              >
-                {options.map((option) => (
-                  <div
-                    key={option}
-                    onClick={() => handleSelect(option)}
-                    style={{
-                      padding: "8px",
-                      cursor: "pointer",
-                      background: "white",
-                      transition: "all 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background =
-                        "linear-gradient(to right, #fb8500, #ffb703)";
-                      e.currentTarget.style.fontWeight = "700";
-                      e.currentTarget.style.fontSize = "18px";
-                      e.currentTarget.style.color = "white";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "white";
-                      e.currentTarget.style.fontWeight = "400";
-                      e.currentTarget.style.fontSize = "16px";
-                      e.currentTarget.style.color = "black";
-                    }}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className={styles.deliveryStatusDiv}>
+            <label className={styles.deliveryLabel}>Delivery Status:</label>
+            <div className={styles.deliveryDropdownContainer}>
+              <input
+                type="text"
+                value={status}
+                readOnly
+                onClick={() => setShowDropdown(!showDropdown)}
+                placeholder="Select status"
+                className={styles.deliveryInput}
+              />
+              {showDropdown && (
+                <div className={styles.deliveryDropdown}>
+                  {options.map((option) => (
+                    <div
+                      key={option}
+                      onClick={() => handleSelect(option)}
+                      className={styles.deliveryOption}
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -420,12 +482,50 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
           </div>
         </div>
 
+        {/* Divider for Measurements */}
+        <div className={styles.measurementDivider}>
+          <h3>Measurements</h3>
+        </div>
+
+        {/* Garment Type Selection */}
+        <div className={styles.garmentTypeDiv}>
+          <label className={styles.garmentLabel}>Garment Type:</label>
+          <div className={styles.garmentDropdownContainer}>
+            <input
+              type="text"
+              value={garmentType}
+              readOnly
+              onClick={() => setShowGarmentDropdown(!showGarmentDropdown)}
+              placeholder="Select garment type"
+              className={styles.garmentInput}
+            />
+            {showGarmentDropdown && (
+              <div className={styles.garmentDropdown}>
+                {garmentOptions.map((garment) => (
+                  <div
+                    key={garment}
+                    onClick={() => handleGarmentSelect(garment)}
+                    className={styles.garmentOption}
+                  >
+                    {garment}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Measurements */}
         <div className={styles.BottomDiv}>
           <div className={styles.gridcontainer}>
             {inputNames.map((name, idx) => (
               <div key={idx} className={styles.griditem}>
-                <label className={styles.label}>{name}:</label>
+                <label className={styles.label}>
+                  <span className={styles.measurementIcon}>
+                    {getMeasurementIcon(name)}
+                  </span>
+                  {name}:
+                </label>
                 <div >
                   <input
                     type="number"
@@ -506,7 +606,7 @@ const NewEntry = ({ recordToEdit, isNewOrder, onSaveSuccess }) => {
                     {/* Description */}
                     <div className={styles.DetailInputDiv}>
                         <h3>Description </h3>
-                        <div style={{ width: '80%' ,paddingLeft:'10px'}}>
+                        <div style={{ width: '100%' ,paddingLeft:'10px'}}>
                           <textarea placeholder="Enter details here..." value={description} onChange={(e) => setDescription(e.target.value)} />
                           {errors.description && <span className={styles.errorText}>{errors.description}</span>}
                         </div>

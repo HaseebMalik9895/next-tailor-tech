@@ -346,10 +346,11 @@
 .recordsHeader {
   display: flex;
   align-items: center;
-  background: linear-gradient(to right, #fb8500, #ffb703);
+  /* background: linear-gradient(to right, #fb8500, #ffb703); */
   height: 50px;
   padding: 0 15px;
-  border-bottom: 2px solid #023047;
+  border-bottom: 0.5px solid #023047;
+  border-top: 0.5px solid #023047;
   font-weight: 700;
   color: #023047;
   position: sticky;
@@ -1075,10 +1076,14 @@ background: linear-gradient(to right, #fb8500, #ffb703);
     padding: 12px;
     text-align: center;
     border: 1px solid rgba(2, 48, 71, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .leftlistdiv .receivediv::before {
-    content: "📅 RECEIVED";
+    content: "RECEIVED";
     font-size: 11px;
     color: #666;
     font-weight: 700;
@@ -1089,7 +1094,7 @@ background: linear-gradient(to right, #fb8500, #ffb703);
   }
 
   .leftlistdiv .deleverdiv::before {
-    content: "🚚 DELIVERED";
+    content: "DELIVERED";
     font-size: 11px;
     color: #666;
     font-weight: 700;

@@ -22,6 +22,33 @@ const Main = () => {
   const [records, setRecords] = useState([]);
   const [isNewOrder, setIsNewOrder] = useState(false);
 
+  // Function to format date as DD/MM/YYYY
+  const formatDate = (dateString) => {
+    if (!dateString || dateString === "-") return dateString;
+    
+    try {
+      // Check if date is already in DD/MM/YYYY format
+      if (dateString.includes('/') && dateString.split('/').length === 3) {
+        const parts = dateString.split('/');
+        if (parts[0].length <= 2 && parts[1].length <= 2 && parts[2].length === 4) {
+          return dateString; // Already in DD/MM/YYYY format
+        }
+      }
+      
+      // Try to parse the date and convert to DD/MM/YYYY
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString; // Return original if invalid
+      
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      
+      return `${day}/${month}/${year}`;
+    } catch (error) {
+      return dateString; // Return original if any error
+    }
+  };
+
 
 
   // Modal state for delete
@@ -328,10 +355,10 @@ const Main = () => {
                             </span>
                           </div>
                           <div className={styles.receivediv}>
-                            <span>{record.receivingDate}</span>
+                            <span>{formatDate(record.receivingDate)}</span>
                           </div>
                           <div className={styles.deleverdiv}>
-                            <span>{record.deliveredDate || "-"}</span>
+                            <span>{formatDate(record.deliveredDate) || "-"}</span>
                           </div>
                         </div>
 
@@ -387,10 +414,10 @@ const Main = () => {
 
                           <div className={styles.mobileDatesSection}>
                             <div className={styles.receivediv}>
-                              <span>{record.receivingDate}</span>
+                              <span>{formatDate(record.receivingDate)}</span>
                             </div>
                             <div className={styles.deleverdiv}>
-                              <span>{record.deliveredDate || "Pending"}</span>
+                              <span>{formatDate(record.deliveredDate) || "Pending"}</span>
                             </div>
                           </div>
                         </div>
@@ -557,10 +584,10 @@ const Main = () => {
                             </span>
                           </div>
                           <div className={styles.receivediv}>
-                            <span>{record.receivingDate}</span>
+                            <span>{formatDate(record.receivingDate)}</span>
                           </div>
                           <div className={styles.deleverdiv}>
-                            <span>{record.deliveredDate || "-"}</span>
+                            <span>{formatDate(record.deliveredDate) || "-"}</span>
                           </div>
                         </div>
 
@@ -613,10 +640,10 @@ const Main = () => {
 
                           <div className={styles.mobileDatesSection}>
                             <div className={styles.receivediv}>
-                              <span>{record.receivingDate}</span>
+                              <span>{formatDate(record.receivingDate)}</span>
                             </div>
                             <div className={styles.deleverdiv}>
-                              <span>{record.deliveredDate || "Completed"}</span>
+                              <span>{formatDate(record.deliveredDate) || "Completed"}</span>
                             </div>
                           </div>
                         </div>

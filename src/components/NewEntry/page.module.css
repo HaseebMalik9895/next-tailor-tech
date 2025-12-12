@@ -67,7 +67,7 @@
 /* Middle Section */
 .MidDiv {
     padding-top: 20px;
-    width: 96%;
+    width: 90%;
 }
 
 .MidFirstDiv {
@@ -107,6 +107,169 @@
     font-size: 18px;
 }
 
+/* Measurement Divider */
+.measurementDivider {
+    margin: 20px 0;
+    padding: 15px 0;
+    border-top: 2px solid #fb8500;
+    border-bottom: 2px solid #fb8500;
+    background: linear-gradient(to right, rgba(251, 133, 0, 0.1), rgba(255, 183, 3, 0.1));
+    text-align: center;
+}
+
+.measurementDivider h3 {
+    color: #023047;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Garment Type Selection */
+.garmentTypeDiv {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(251, 133, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(251, 133, 0, 0.2);
+}
+
+.garmentLabel {
+    color: #023047;
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 120px;
+}
+
+.garmentDropdownContainer {
+    position: relative;
+    width: 200px;
+}
+
+.garmentInput {
+    background: linear-gradient(to bottom, #fb8500, #ffb703);
+    border: none;
+    border-radius: 7px;
+    height: 45px;
+    width: 100%;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+
+.garmentDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 2px solid #fb8500;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    margin-top: 2px;
+}
+
+.garmentOption {
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #023047;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(251, 133, 0, 0.2);
+}
+
+.garmentOption:last-child {
+    border-bottom: none;
+}
+
+.garmentOption:hover {
+    background: linear-gradient(to right, #fb8500, #ffb703);
+    color: white;
+    font-weight: 700;
+}
+
+/* Delivery Status Selection */
+.deliveryStatusDiv {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(251, 133, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(251, 133, 0, 0.2);
+}
+
+.deliveryLabel {
+    color: #023047;
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 120px;
+}
+
+.deliveryDropdownContainer {
+    position: relative;
+    width: 200px;
+}
+
+.deliveryInput {
+    background: linear-gradient(to bottom, #fb8500, #ffb703);
+    border: none;
+    border-radius: 7px;
+    height: 45px;
+    width: 100%;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+
+.deliveryDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 2px solid #fb8500;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    margin-top: 2px;
+}
+
+.deliveryOption {
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #023047;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(251, 133, 0, 0.2);
+}
+
+.deliveryOption:last-child {
+    border-bottom: none;
+}
+
+.deliveryOption:hover {
+    background: linear-gradient(to right, #fb8500, #ffb703);
+    color: white;
+    font-weight: 700;
+}
+
 /* Bottom Section */
 .BottomDiv {
     height: 80%;
@@ -143,6 +306,17 @@
     font-size: 14px;
     color: #023047;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.measurementIcon {
+    color: #fb8500;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    min-width: 20px;
 }
 
 .DateInputs,
@@ -229,7 +403,7 @@
     display: flex;
     /* background-color: brown; */
     margin-top: 5vh;
-    height: 25vh;
+    height: 45vh;
 }
 
 .DetailInputDiv h3 {
@@ -251,16 +425,26 @@
     resize: none;
     font-size: 18px;
     overflow: hidden;
+    /* background-color:rebeccapurple; */
 }
 
 /* Save Button */
 .SaveButtonDiv {
     /* background-color: blueviolet; */
-    height: 20%;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+    margin-top: 20px; /* Small gap below description */
+    padding: 10px 0;
+}
+
+/* Laptop/Desktop specific styles */
+@media (min-width: 769px) {
+    .SaveButtonDiv {
+        margin-top: 15px; /* Slightly smaller gap on larger screens */
+    }
 }
 
 .SaveButton {
@@ -406,14 +590,28 @@
         gap: 20px;
         width: 100%;
         margin-top: 10px;
-        align-items: stretch;
+        align-items: center;
     }
 
-    .TopDiv > div {
+    .TopDiv > div:first-child {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .TopDiv > div:first-child > div {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 8px;
+    }
+
+    .TopDiv > div:last-child {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 
     .label {
@@ -427,6 +625,58 @@
         height: 45px;
         font-size: 16px;
         padding: 10px;
+        margin-top: 8px;
+    }
+
+    /* Mobile specific styles for the top section layout */
+    .TopDiv > div:first-child {
+        order: 2;
+    }
+
+    .MainImageDiv {
+        order: 1;
+        margin: 20px 0;
+    }
+
+    .TopDiv > div:last-child {
+        order: 3;
+    }
+
+    /* Ensure proper spacing for mobile */
+    .TopDiv > div:first-child > div {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: rgba(251, 133, 0, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(251, 133, 0, 0.2);
+    }
+
+    .TopDiv > div:last-child > div {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: rgba(251, 133, 0, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(251, 133, 0, 0.2);
+    }
+
+    /* Specific mobile styles for delivery date section */
+    .TopDiv > div:last-child {
+        width: 100% !important;
+    }
+
+    .TopDiv > div:last-child > div:first-child {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .TopDiv > div:last-child > div:first-child > div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
     }
 
     .ImageDiv {
@@ -487,6 +737,81 @@
         margin-left: 0;
     }
 
+    .measurementDivider {
+        margin: 15px 0;
+        padding: 10px 0;
+    }
+
+    .measurementDivider h3 {
+        font-size: 16px;
+    }
+
+    .garmentTypeDiv {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 10px 0;
+        padding: 10px;
+    }
+
+    .garmentLabel {
+        font-size: 14px;
+        min-width: auto;
+    }
+
+    .garmentDropdownContainer {
+        width: 100%;
+    }
+
+    .garmentInput {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .garmentOption {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .deliveryStatusDiv {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 10px 0;
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .deliveryLabel {
+        font-size: 14px;
+        min-width: auto;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .deliveryDropdownContainer {
+        width: 100%;
+    }
+
+    .deliveryInput {
+        height: 45px;
+        font-size: 16px;
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+
+    .deliveryOption {
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+
+    .deliveryDropdown {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .BottomDiv {
         height: auto;
     }
@@ -514,6 +839,12 @@
         width: 100%;
         font-size: 12px;
         margin-bottom: 0;
+        gap: 6px;
+    }
+
+    .measurementIcon {
+        font-size: 14px;
+        min-width: 16px;
     }
 
     .Inputs {
@@ -521,6 +852,16 @@
         height: 45px;
         font-size: 18px;
         padding: 10px;
+    }
+
+    .Suit {
+        width: 100%;
+        height: 45px;
+        font-size: 16px;
+        padding: 10px;
+        margin-top: 8px;
+        margin-left: 0;
+        text-align: center;
     }
 
     .CheckBoxDiv {
@@ -625,5 +966,75 @@
         font-size: 16px;
         color: white;
         font-weight: 700;
+    }
+}
+/* Extra
+ small mobile devices */
+@media (max-width: 480px) {
+    .ParentDiv {
+        padding: 5px;
+    }
+
+    .TopDiv {
+        gap: 15px;
+        margin-top: 5px;
+    }
+
+    .label {
+        font-size: 11px;
+    }
+
+    .DateInputs,
+    .Suit {
+        height: 40px;
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .ImageDiv {
+        height: 120px;
+        width: 120px;
+    }
+
+    .CameraButton {
+        height: 30px;
+        width: 30px;
+        right: calc(50% - 60px);
+    }
+
+    .deliveryInput,
+    .garmentInput {
+        height: 42px;
+        font-size: 14px;
+        padding: 0 12px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .deliveryOption,
+    .garmentOption {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .deliveryStatusDiv {
+        padding: 12px;
+        margin: 8px 0;
+    }
+
+    .deliveryLabel {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+
+    .TopDiv > div:first-child > div,
+    .TopDiv > div:last-child > div {
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    .errorText {
+        font-size: 11px;
+        margin-top: 5px;
     }
 }
