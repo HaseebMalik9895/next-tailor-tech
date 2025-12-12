@@ -8,16 +8,9 @@ import {
     FaExpand, 
     FaArrowsAltH, 
     FaArrowsAltV,
-    FaHandPaper,
     FaCircle,
-    FaTshirt,
-    FaVest,
-    FaCut,
     FaRegSquare,
-    FaArrowUp,
-    FaArrowDown,
-    FaArrowLeft,
-    FaArrowRight
+    FaArrowDown
 } from 'react-icons/fa';
 import { db } from "../../firebase/firebase";
 import { ref, push, set, get } from "firebase/database";

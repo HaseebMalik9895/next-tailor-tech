@@ -44,7 +44,7 @@ const Main = () => {
       const year = date.getFullYear();
       
       return `${day}/${month}/${year}`;
-    } catch (error) {
+    } catch {
       return dateString; // Return original if any error
     }
   };

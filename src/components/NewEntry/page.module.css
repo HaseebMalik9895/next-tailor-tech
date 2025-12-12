@@ -366,6 +366,7 @@
 
 .Inputs[type=number] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 /* Checkbox Section */
