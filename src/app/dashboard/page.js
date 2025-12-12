@@ -51,7 +51,7 @@ const Main = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const newOrderId = urlParams.get("newOrder");
-    
+
     if (newOrderId) {
       const record = records.find((r) => r.id === newOrderId);
       if (record) {
@@ -74,7 +74,7 @@ const Main = () => {
 
     // Push initial state
     window.history.pushState(null, "", window.location.href);
-    
+
     // Listen for back button
     window.addEventListener("popstate", handlePopState);
 
@@ -187,7 +187,7 @@ const Main = () => {
             >
               <h3>New entry</h3>
             </button>
-             <button
+            <button
               className={
                 dashboardbutton === "History"
                   ? styles.activebutton
@@ -257,6 +257,17 @@ const Main = () => {
               </div>
             </div>
 
+            {/* Records Header */}
+            <div className={styles.recordsHeader}>
+              <div className={styles.headerItem}>Image</div>
+              <div className={styles.headerItem}>Code</div>
+              <div className={styles.headerItem}>Name</div>
+              <div className={styles.headerItem}>Status</div>
+              <div className={styles.headerItem}>Receiving Date</div>
+              <div className={styles.headerItem}>Delivery Date</div>
+              {/* <div className={styles.headerItem}>Actions</div> */}
+            </div>
+
             <div className={styles.recordlist}>
               {pendingRecords.length === 0 ? (
                 <div style={{ padding: "20px", textAlign: "center", color: "#666" }}>
@@ -267,78 +278,144 @@ const Main = () => {
                   const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
                   return (
                     <div key={record.id} className={styles.listdiv}>
-                    <div className={styles.leftlistdiv}>
-                      <Image
-                        src={record.image || "/person1.png"}
-                        layout="responsive"
-                        width={50}
-                        height={50}
-                        alt="person"
-                        style={{
-                          width: "50%",
-                          height: "auto",
-                          maxWidth: "40px",
-                          maxHeight: "40px",
-                        }}
-                      />
-                      <div className={styles.codediv}>
-                        <h7>{record.code}</h7>
+                      <div className={styles.leftlistdiv}>
+                        {/* Desktop Layout */}
+                        <div className={styles.desktopLayout}>
+                          <div style={{ width: '10%', height: '100%' }}>
+                            <Image
+                              src={record.image || "/person1.png"}
+                              layout="responsive"
+                              width={50}
+                              height={50}
+                              alt="person"
+                              style={{
+                                width: "50%",
+                                height: "auto",
+                                maxWidth: "40px",
+                                maxHeight: "40px",
+                              }}
+                            />
+                          </div>
+                          <div className={styles.codediv}>
+                            <h7>{record.code}</h7>
+                          </div>
+                          <div
+                            className={styles.namediv}
+                            onClick={() => handleMeasurementClick(record)}
+                          >
+                            <h3>{record.customerName}</h3>
+                          </div>
+                          <div
+                            className={styles.statusdiv}
+                            style={{
+                              backgroundColor:
+                                status === "Pending" ? "#ffcdd2" : "#c8e6c9",
+                              borderRadius: "5px",
+                              padding: "2px 6px",
+                              display: "inline-block",
+                              minWidth: "60px",
+                              textAlign: "center",
+                              marginLeft: 10, marginRight: 10
+                            }}
+                          >
+                            <span
+                              style={{
+                                color: status === "Pending" ? "red" : "green",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {status}
+                            </span>
+                          </div>
+                          <div className={styles.receivediv}>
+                            <span>{record.receivingDate}</span>
+                          </div>
+                          <div className={styles.deleverdiv}>
+                            <span>{record.deliveredDate || "-"}</span>
+                          </div>
+                        </div>
+
+                        {/* Mobile Card Header */}
+                        <div className={styles.mobileCardHeader}>
+                          <div>
+                            <Image
+                              src={record.image || "/person1.png"}
+                              layout="responsive"
+                              width={60}
+                              height={60}
+                              alt="person"
+                              style={{
+                                width: "100%",
+                                height: "auto",
+                                maxWidth: "60px",
+                                maxHeight: "60px",
+                              }}
+                            />
+                          </div>
+                          <div className={styles.mobileCardInfo}>
+                            <div
+                              className={styles.namediv}
+                              onClick={() => handleMeasurementClick(record)}
+                            >
+                              <h3>{record.customerName}</h3>
+                            </div>
+                            <div className={styles.codediv}>
+                              <h7>{record.code}</h7>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Mobile Card Body */}
+                        <div className={styles.mobileCardBody}>
+                          <div
+                            className={styles.statusdiv}
+                            style={{
+                              backgroundColor:
+                                status === "Pending" ? "rgba(255, 205, 210, 0.3)" : "rgba(200, 230, 201, 0.3)",
+                              borderColor:
+                                status === "Pending" ? "#ffcdd2" : "#c8e6c9",
+                            }}
+                          >
+                            <span
+                              style={{
+                                color: status === "Pending" ? "#d32f2f" : "#2e7d32",
+                              }}
+                            >
+                              {status}
+                            </span>
+                          </div>
+
+                          <div className={styles.mobileDatesSection}>
+                            <div className={styles.receivediv}>
+                              <span>{record.receivingDate}</span>
+                            </div>
+                            <div className={styles.deleverdiv}>
+                              <span>{record.deliveredDate || "Pending"}</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div
-                        className={styles.namediv}
-                        onClick={() => handleMeasurementClick(record)}
-                      >
-                        <h3>{record.customerName}</h3>
-                      </div>
-                      <div
-                        // onClick={() => router.push("/statusRecord")}
-                        className={styles.statusdiv}
-                        style={{
-                          backgroundColor:
-                            status === "Pending" ? "#ffcdd2" : "#c8e6c9", // light red / light green
-                          borderRadius: "5px",
-                          padding: "2px 6px",
-                          display: "inline-block",
-                          minWidth: "60px",
-                          textAlign: "center",
-                        }}
-                      >
-                        <span
-                          style={{
-                            color: status === "Pending" ? "red" : "green", // text color
-                            fontWeight: "bold",
-                          }}
+
+                      <div className={styles.Rightlistdiv}>
+                        <button
+                          className={styles.actionButton}
+                          onClick={() => handleEdit(record)}
+                          title="Edit Record"
                         >
-                          {status}
-                        </span>
-                      </div>
+                          <MdEdit size={18} color="green"/>
+                        </button>
 
-                      <div className={styles.receivediv}>
-                        <span>{record.receivingDate}</span>
-                      </div>
-                      <div className={styles.deleverdiv}>
-                        <span>{record.deliveredDate || "-"}</span>
+                        <button
+                          className={styles.actionButtonDelete}
+                          onClick={() => handleDeleteClick(record)}
+                          title="Delete Record"
+                        >
+                          <MdDelete size={18} color="red"/>
+                        </button>
                       </div>
                     </div>
-
-                    <div className={styles.Rightlistdiv}>
-                      <button
-                        className={styles.actionButton}
-                        onClick={() => handleEdit(record)}
-                      >
-                        <MdEdit size={18} color="green" />
-                      </button>
-
-                      <button
-                        className={styles.actionButtonDelete}
-                        onClick={() => handleDeleteClick(record)}
-                      >
-                        <MdDelete size={18} color="red" />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })
+                  );
+                })
               )}
             </div>
 
@@ -381,7 +458,7 @@ const Main = () => {
         {/* NEW ENTRY */}
         {dashboardbutton === "New entry" && showNewEntry && (
           <div className={styles.NewEntryDiv}>
-            <NewEntry 
+            <NewEntry
               recordToEdit={selectedRecord}
               isNewOrder={isNewOrder}
               onSaveSuccess={() => {
@@ -408,6 +485,16 @@ const Main = () => {
               </div>
             </div>
 
+            {/* History Header */}
+            <div className={styles.recordsHeader}>
+              <div className={styles.headerItem}>Image</div>
+              <div className={styles.headerItem}>Code</div>
+              <div className={styles.headerItem}>Name</div>
+              <div className={styles.headerItem}>Status</div>
+              <div className={styles.headerItem}>Receiving Date</div>
+              <div className={styles.headerItem}>Delivery Date</div>
+            </div>
+
             <div className={styles.recordlist}>
               {deliveredRecords.length === 0 ? (
                 <div style={{ padding: "20px", textAlign: "center", color: "#666" }}>
@@ -417,64 +504,126 @@ const Main = () => {
                 deliveredRecords.map((record) => {
                   const status = record.status || (record.deliveredDate ? "Delivered" : "Pending");
                   return (
-                    <div 
-                      key={record.id} 
+                    <div
+                      key={record.id}
                       className={styles.listdiv}
                       onClick={() => router.push(`/customer/${record.id}`)}
                       style={{ cursor: "pointer" }}
                     >
-                    <div className={styles.leftlistdiv}>
-                      <Image
-                        src={record.image || "/person1.png"}
-                        layout="responsive"
-                        width={50}
-                        height={50}
-                        alt="person"
-                        style={{
-                          width: "50%",
-                          height: "auto",
-                          maxWidth: "40px",
-                          maxHeight: "40px",
-                        }}
-                      />
-                      <div className={styles.codediv}>
-                        <h7>{record.code}</h7>
-                      </div>
-                      <div className={styles.namediv}>
-                        <h3>{record.customerName}</h3>
-                      </div>
-                      <div
-                        className={styles.statusdiv}
-                        style={{
-                          backgroundColor:
-                            status === "Pending" ? "#ffcdd2" : "#c8e6c9",
-                          borderRadius: "5px",
-                          padding: "2px 6px",
-                          display: "inline-block",
-                          minWidth: "60px",
-                          textAlign: "center",
-                        }}
-                      >
-                        <span
-                          style={{
-                            color: status === "Pending" ? "red" : "green",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {status}
-                        </span>
-                      </div>
+                      <div className={styles.leftlistdiv}>
+                        {/* Desktop Layout */}
+                        <div className={styles.desktopLayout}>
+                          <div>
+                            <Image
+                              src={record.image || "/person1.png"}
+                              layout="responsive"
+                              width={50}
+                              height={50}
+                              alt="person"
+                              style={{
+                                width: "50%",
+                                height: "auto",
+                                maxWidth: "40px",
+                                maxHeight: "40px",
+                              }}
+                            />
+                          </div>
+                          <div className={styles.codediv}>
+                            <h7>{record.code}</h7>
+                          </div>
+                          <div className={styles.namediv}>
+                            <h3>{record.customerName}</h3>
+                          </div>
+                          <div
+                            className={styles.statusdiv}
+                            style={{
+                              backgroundColor:
+                                status === "Pending" ? "#ffcdd2" : "#c8e6c9",
+                              borderRadius: "5px",
+                              padding: "2px 6px",
+                              display: "inline-block",
+                              minWidth: "60px",
+                              textAlign: "center",
+                              marginLeft: 10, marginRight: 10
+                            }}
+                          >
+                            <span
+                              style={{
+                                color: status === "Pending" ? "red" : "green",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {status}
+                            </span>
+                          </div>
+                          <div className={styles.receivediv}>
+                            <span>{record.receivingDate}</span>
+                          </div>
+                          <div className={styles.deleverdiv}>
+                            <span>{record.deliveredDate || "-"}</span>
+                          </div>
+                        </div>
 
-                      <div className={styles.receivediv}>
-                        <span>{record.receivingDate}</span>
-                      </div>
-                      <div className={styles.deleverdiv}>
-                        <span>{record.deliveredDate || "-"}</span>
+                        {/* Mobile Card Header */}
+                        <div className={styles.mobileCardHeader}>
+                          <div>
+                            <Image
+                              src={record.image || "/person1.png"}
+                              layout="responsive"
+                              width={60}
+                              height={60}
+                              alt="person"
+                              style={{
+                                width: "100%",
+                                height: "auto",
+                                maxWidth: "60px",
+                                maxHeight: "60px",
+                              }}
+                            />
+                          </div>
+                          <div className={styles.mobileCardInfo}>
+                            <div className={styles.namediv}>
+                              <h3>{record.customerName}</h3>
+                            </div>
+                            <div className={styles.codediv}>
+                              <h7>{record.code}</h7>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Mobile Card Body */}
+                        <div className={styles.mobileCardBody}>
+                          <div
+                            className={styles.statusdiv}
+                            style={{
+                              backgroundColor:
+                                status === "Pending" ? "rgba(255, 205, 210, 0.3)" : "rgba(200, 230, 201, 0.3)",
+                              borderColor:
+                                status === "Pending" ? "#ffcdd2" : "#c8e6c9",
+                            }}
+                          >
+                            <span
+                              style={{
+                                color: status === "Pending" ? "#d32f2f" : "#2e7d32",
+                              }}
+                            >
+                              {status}
+                            </span>
+                          </div>
+
+                          <div className={styles.mobileDatesSection}>
+                            <div className={styles.receivediv}>
+                              <span>{record.receivingDate}</span>
+                            </div>
+                            <div className={styles.deleverdiv}>
+                              <span>{record.deliveredDate || "Completed"}</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })
+                  );
+                })
               )}
             </div>
           </div>
