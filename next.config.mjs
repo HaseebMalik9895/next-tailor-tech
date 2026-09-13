@@ -9,8 +9,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  output: 'standalone',
-  trailingSlash: true,
   swcMinify: true,
 };
 
